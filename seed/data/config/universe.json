@@ -1,0 +1,1264 @@
+{
+ "categories": [
+  {
+   "family": "Sectors",
+   "items": [
+    "PRCT",
+    "MBOT",
+    "HSAI",
+    "OUST",
+    "AEVA",
+    "SERV",
+    "CEVA",
+    "CCXI",
+    "PDYN",
+    "RR",
+    "AUR",
+    "CLPT",
+    "PONY",
+    "WRD"
+   ],
+   "name": "Robotics"
+  },
+  {
+   "family": "Sectors",
+   "items": [
+    "BKSY",
+    "RDW",
+    "PL",
+    "FLY",
+    "VOYG",
+    "LUNR",
+    "SPIR",
+    "KRMN",
+    "ASTS",
+    "RKLB"
+   ],
+   "name": "Space AI"
+  },
+  {
+   "family": "Sectors",
+   "items": [
+    "SMR",
+    "GFUZ",
+    "LEU",
+    "OKLO",
+    "ASPI",
+    "LTBR",
+    "XE",
+    "IMSR",
+    "NNE"
+   ],
+   "name": "Nuclear"
+  },
+  {
+   "family": "Sectors",
+   "items": [
+    "SDGR",
+    "RXRX",
+    "ABSI",
+    "DNA",
+    "QSI",
+    "BFLY",
+    "SOPH",
+    "GRAL",
+    "NNOX",
+    "SANA",
+    "LCTX",
+    "HUMA",
+    "MESO",
+    "IPSC"
+   ],
+   "name": "Advanced Medicine"
+  },
+  {
+   "family": "Sectors",
+   "items": [
+    "POET",
+    "AEVA",
+    "LWLG",
+    "KOPN",
+    "LASR",
+    "ALMU",
+    "LPTH"
+   ],
+   "name": "Photonics"
+  },
+  {
+   "family": "Sectors",
+   "items": [
+    "NTLA",
+    "BEAM",
+    "DTIL",
+    "SCTX",
+    "TWST",
+    "PRME",
+    "MGX",
+    "MXCT",
+    "CRBU",
+    "CDXS",
+    "PGEN",
+    "PACB"
+   ],
+   "name": "Gene"
+  },
+  {
+   "family": "Sectors",
+   "items": [
+    "ENVX",
+    "EOSE",
+    "QS",
+    "FAC",
+    "AMPX"
+   ],
+   "name": "Batteries"
+  },
+  {
+   "family": "Sectors",
+   "items": [
+    "OUST",
+    "AEVA",
+    "AMBA",
+    "SYM",
+    "AUR",
+    "KDK",
+    "AMBQ"
+   ],
+   "name": "Physical AI"
+  },
+  {
+   "family": "Sectors",
+   "items": [
+    "POET",
+    "INDI",
+    "NVTS",
+    "AIP",
+    "AEHR",
+    "AMBQ",
+    "ATOM"
+   ],
+   "name": "Semiconductors"
+  },
+  {
+   "family": "Sectors",
+   "items": [
+    "IONQ",
+    "INFQ",
+    "XNDU",
+    "QNT",
+    "IQMX",
+    "PSQL"
+   ],
+   "name": "Quantum"
+  },
+  {
+   "family": "Sectors",
+   "items": [
+    "TE",
+    "TYGO",
+    "ASTI",
+    "HYSR",
+    "SHLS",
+    "ENPH",
+    "NXT",
+    "FTCI",
+    "ARRY",
+    "JKS",
+    "FSLR"
+   ],
+   "name": "Solar"
+  },
+  {
+   "family": "Sectors",
+   "items": [
+    "IPX",
+    "LWLG",
+    "USAR",
+    "ASPN",
+    "LPTH",
+    "AMPX"
+   ],
+   "name": "Advanced Materials"
+  },
+  {
+   "family": "Sectors",
+   "items": [
+    "SOUN",
+    "INOD",
+    "TEM",
+    "CRNC",
+    "PATH",
+    "LMND",
+    "NP",
+    "ROOT",
+    "FRSH",
+    "AI",
+    "RZLV",
+    "LAES",
+    "NTSK",
+    "S",
+    "SAIL",
+    "RBRK",
+    "PGY",
+    "FIGR",
+    "UPST",
+    "LAW",
+    "GDYN",
+    "DSP",
+    "PERI",
+    "PUBM",
+    "ZETA",
+    "COUR"
+   ],
+   "name": "AI Application"
+  },
+  {
+   "family": "Claude picks",
+   "items": [
+    "POET",
+    "BEAM",
+    "OKLO",
+    "ASTS",
+    "XNDU",
+    "INFQ",
+    "QS",
+    "LWLG",
+    "AUR",
+    "IPX",
+    "SANA"
+   ],
+   "name": "Claude Top 10 - Overall"
+  },
+  {
+   "family": "GPT picks",
+   "items": [
+    "BEAM",
+    "POET",
+    "OUST",
+    "FAC",
+    "BKSY",
+    "ENVX",
+    "RXRX",
+    "AUR",
+    "OKLO",
+    "AMPX",
+    "AEVA",
+    "LUNR"
+   ],
+   "name": "GPT Top 10 - Overall"
+  },
+  {
+   "family": "Claude picks",
+   "items": [
+    "QNT",
+    "SANA",
+    "PRME",
+    "ASTS",
+    "AUR",
+    "QS",
+    "OKLO",
+    "GFUZ",
+    "LWLG",
+    "XE"
+   ],
+   "name": "Claude Top 10 - Best Tech"
+  },
+  {
+   "family": "GPT picks",
+   "items": [
+    "BEAM",
+    "XNDU",
+    "IONQ",
+    "PRME",
+    "GFUZ",
+    "ASTS",
+    "FAC",
+    "AEVA",
+    "POET",
+    "PACB",
+    "XE",
+    "OKLO",
+    "AUR",
+    "LTBR",
+    "OUST"
+   ],
+   "name": "GPT Top 10 - Best Tech"
+  },
+  {
+   "family": "Claude picks",
+   "items": [
+    "FSLR",
+    "RBRK",
+    "SYM",
+    "NXT",
+    "LEU",
+    "RKLB",
+    "HSAI",
+    "QNT",
+    "BEAM",
+    "OKLO",
+    "POET",
+    "ASTS",
+    "TEM"
+   ],
+   "name": "Claude Top 10 - Safest Bets"
+  },
+  {
+   "family": "GPT picks",
+   "items": [
+    "NXT",
+    "FSLR",
+    "RBRK",
+    "SYM",
+    "RKLB",
+    "TEM",
+    "PATH",
+    "LEU",
+    "OUST",
+    "IONQ"
+   ],
+   "name": "GPT Top 10 - Safest Bets"
+  },
+  {
+   "family": "Claude picks",
+   "items": [
+    "GFUZ",
+    "PRME",
+    "SANA",
+    "XNDU",
+    "LWLG",
+    "QS",
+    "IPX",
+    "POET",
+    "OKLO",
+    "AUR",
+    "BEAM"
+   ],
+   "name": "Claude Top 10 - Extreme Profits"
+  },
+  {
+   "family": "GPT picks",
+   "items": [
+    "XNDU",
+    "PRME",
+    "POET",
+    "BEAM",
+    "IONQ",
+    "GFUZ",
+    "ASTS",
+    "QS",
+    "RKLB",
+    "OKLO"
+   ],
+   "name": "GPT Top 10 - Extreme Profits"
+  },
+  {
+   "family": "My Favorites",
+   "items": [
+    "BKSY",
+    "AEVA",
+    "GFUZ",
+    "SANA",
+    "LWLG",
+    "IPX",
+    "BEAM",
+    "CCXI",
+    "LMND",
+    "INOD",
+    "PGY",
+    "SOUN",
+    "TYGO",
+    "ASTI",
+    "PDYN",
+    "FAC",
+    "QNT",
+    "XNDU",
+    "POET",
+    "OKLO",
+    "CEVA",
+    "AMBQ",
+    "MESO"
+   ],
+   "name": "My Favorites"
+  }
+ ],
+ "stocks": {
+  "ABSI": {
+   "currency": "USD",
+   "name": "Absci Corporation",
+   "quote": "ABSI",
+   "status": "ok",
+   "symbol": "ABSI"
+  },
+  "AEHR": {
+   "currency": "USD",
+   "name": "Aehr Test Systems",
+   "quote": "AEHR",
+   "status": "ok",
+   "symbol": "AEHR"
+  },
+  "AEVA": {
+   "currency": "USD",
+   "name": "Aeva Technologies, Inc.",
+   "quote": "AEVA",
+   "status": "ok",
+   "symbol": "AEVA"
+  },
+  "AI": {
+   "currency": "USD",
+   "name": "C3.ai, Inc.",
+   "quote": "AI",
+   "status": "ok",
+   "symbol": "AI"
+  },
+  "AIP": {
+   "currency": "USD",
+   "name": "Arteris, Inc.",
+   "quote": "AIP",
+   "status": "ok",
+   "symbol": "AIP"
+  },
+  "ALMU": {
+   "currency": "USD",
+   "name": "Aeluma, Inc.",
+   "quote": "ALMU",
+   "status": "ok",
+   "symbol": "ALMU"
+  },
+  "AMBA": {
+   "currency": "USD",
+   "name": "Ambarella, Inc.",
+   "quote": "AMBA",
+   "status": "ok",
+   "symbol": "AMBA"
+  },
+  "AMBQ": {
+   "currency": "USD",
+   "name": "Ambiq Micro, Inc.",
+   "quote": "AMBQ",
+   "status": "ok",
+   "symbol": "AMBQ"
+  },
+  "AMPX": {
+   "currency": "USD",
+   "name": "Amprius Technologies, Inc.",
+   "quote": "AMPX",
+   "status": "ok",
+   "symbol": "AMPX"
+  },
+  "ARRY": {
+   "currency": "USD",
+   "name": "Array Technologies, Inc.",
+   "quote": "ARRY",
+   "status": "ok",
+   "symbol": "ARRY"
+  },
+  "ASPI": {
+   "currency": "USD",
+   "name": "ASP Isotopes Inc.",
+   "quote": "ASPI",
+   "status": "ok",
+   "symbol": "ASPI"
+  },
+  "ASPN": {
+   "currency": "USD",
+   "name": "Aspen Aerogels, Inc.",
+   "quote": "ASPN",
+   "status": "ok",
+   "symbol": "ASPN"
+  },
+  "ASTI": {
+   "currency": "USD",
+   "name": "Ascent Solar Technologies, Inc",
+   "quote": "ASTI",
+   "status": "ok",
+   "symbol": "ASTI"
+  },
+  "ASTS": {
+   "currency": "USD",
+   "name": "AST SpaceMobile, Inc.",
+   "quote": "ASTS",
+   "status": "ok",
+   "symbol": "ASTS"
+  },
+  "ATOM": {
+   "currency": "USD",
+   "name": "Atomera Incorporated",
+   "quote": "ATOM",
+   "status": "ok",
+   "symbol": "ATOM"
+  },
+  "AUR": {
+   "currency": "USD",
+   "name": "Aurora Innovation, Inc.",
+   "quote": "AUR",
+   "status": "ok",
+   "symbol": "AUR"
+  },
+  "BEAM": {
+   "currency": "USD",
+   "name": "Beam Therapeutics Inc.",
+   "quote": "BEAM",
+   "status": "ok",
+   "symbol": "BEAM"
+  },
+  "BFLY": {
+   "currency": "USD",
+   "name": "Butterfly Network, Inc.",
+   "quote": "BFLY",
+   "status": "ok",
+   "symbol": "BFLY"
+  },
+  "BKSY": {
+   "currency": "USD",
+   "name": "BlackSky Technology Inc.",
+   "quote": "BKSY",
+   "status": "ok",
+   "symbol": "BKSY"
+  },
+  "CCXI": {
+   "currency": "USD",
+   "name": "Churchill Capital Corp XI",
+   "note": "Churchill Capital Corp XI (SPAC); listed as CCXI (AGLT) in your sheet",
+   "quote": "CCXI",
+   "status": "ok",
+   "symbol": "CCXI (AGLT)"
+  },
+  "CDXS": {
+   "currency": "USD",
+   "name": "Codexis, Inc.",
+   "quote": "CDXS",
+   "status": "ok",
+   "symbol": "CDXS"
+  },
+  "CEVA": {
+   "currency": "USD",
+   "name": "CEVA, Inc.",
+   "quote": "CEVA",
+   "status": "ok",
+   "symbol": "CEVA"
+  },
+  "CLPT": {
+   "currency": "USD",
+   "name": "ClearPoint Neuro Inc.",
+   "quote": "CLPT",
+   "status": "ok",
+   "symbol": "CLPT"
+  },
+  "COUR": {
+   "currency": "USD",
+   "name": "Coursera, Inc.",
+   "quote": "COUR",
+   "status": "ok",
+   "symbol": "COUR"
+  },
+  "CRBU": {
+   "currency": "USD",
+   "name": "Caribou Biosciences, Inc.",
+   "quote": "CRBU",
+   "status": "ok",
+   "symbol": "CRBU"
+  },
+  "CRNC": {
+   "currency": "USD",
+   "name": "Cerence Inc.",
+   "quote": "CRNC",
+   "status": "ok",
+   "symbol": "CRNC"
+  },
+  "DNA": {
+   "currency": "USD",
+   "name": "Ginkgo Bioworks Holdings, Inc.",
+   "quote": "DNA",
+   "status": "ok",
+   "symbol": "DNA"
+  },
+  "DSP": {
+   "currency": "USD",
+   "name": "Viant Technology Inc.",
+   "quote": "DSP",
+   "status": "ok",
+   "symbol": "DSP"
+  },
+  "DTIL": {
+   "currency": "USD",
+   "name": "Precision BioSciences, Inc.",
+   "quote": "DTIL",
+   "status": "ok",
+   "symbol": "DTIL"
+  },
+  "ENPH": {
+   "currency": "USD",
+   "name": "Enphase Energy, Inc.",
+   "quote": "ENPH",
+   "status": "ok",
+   "symbol": "ENPH"
+  },
+  "ENVX": {
+   "currency": "USD",
+   "name": "Enovix Corporation",
+   "quote": "ENVX",
+   "status": "ok",
+   "symbol": "ENVX"
+  },
+  "EOSE": {
+   "currency": "USD",
+   "name": "Eos Energy Enterprises, Inc.",
+   "quote": "EOSE",
+   "status": "ok",
+   "symbol": "EOSE"
+  },
+  "FAC": {
+   "currency": "USD",
+   "name": "Factorial Energy Inc.",
+   "quote": "FAC",
+   "status": "ok",
+   "symbol": "FAC"
+  },
+  "FIGR": {
+   "currency": "USD",
+   "name": "Figure Technology Solutions, In",
+   "quote": "FIGR",
+   "status": "ok",
+   "symbol": "FIGR"
+  },
+  "FLY": {
+   "currency": "USD",
+   "name": "Firefly Aerospace Inc.",
+   "quote": "FLY",
+   "status": "ok",
+   "symbol": "FLY"
+  },
+  "FRSH": {
+   "currency": "USD",
+   "name": "Freshworks Inc.",
+   "quote": "FRSH",
+   "status": "ok",
+   "symbol": "FRSH"
+  },
+  "FSLR": {
+   "currency": "USD",
+   "name": "First Solar, Inc.",
+   "quote": "FSLR",
+   "status": "ok",
+   "symbol": "FSLR"
+  },
+  "FTCI": {
+   "currency": "USD",
+   "name": "FTC Solar, Inc.",
+   "quote": "FTCI",
+   "status": "ok",
+   "symbol": "FTCI"
+  },
+  "GDYN": {
+   "currency": "USD",
+   "name": "Grid Dynamics Holdings, Inc.",
+   "quote": "GDYN",
+   "status": "ok",
+   "symbol": "GDYN"
+  },
+  "GFUZ": {
+   "currency": "USD",
+   "name": "General Fusion Group Ltd.",
+   "quote": "GFUZ",
+   "status": "ok",
+   "symbol": "GFUZ"
+  },
+  "GRAL": {
+   "currency": "USD",
+   "name": "GRAIL, Inc.",
+   "quote": "GRAL",
+   "status": "ok",
+   "symbol": "GRAL"
+  },
+  "HSAI": {
+   "currency": "USD",
+   "name": "Hesai Group",
+   "quote": "HSAI",
+   "status": "ok",
+   "symbol": "HSAI"
+  },
+  "HUMA": {
+   "currency": "USD",
+   "name": "Humacyte, Inc.",
+   "quote": "HUMA",
+   "status": "ok",
+   "symbol": "HUMA"
+  },
+  "HYSR": {
+   "currency": "USD",
+   "name": "SunHydrogen Inc.",
+   "note": "OTC-traded",
+   "quote": "HYSR",
+   "status": "ok",
+   "symbol": "HYSR"
+  },
+  "IMSR": {
+   "currency": "USD",
+   "name": "Terrestrial Energy Inc.",
+   "quote": "IMSR",
+   "status": "ok",
+   "symbol": "IMSR"
+  },
+  "INDI": {
+   "currency": "USD",
+   "name": "indie Semiconductor, Inc.",
+   "quote": "INDI",
+   "status": "ok",
+   "symbol": "INDI"
+  },
+  "INFQ": {
+   "currency": "USD",
+   "name": "Infleqtion, Inc.",
+   "quote": "INFQ",
+   "status": "ok",
+   "symbol": "INFQ"
+  },
+  "INOD": {
+   "currency": "USD",
+   "name": "Innodata Inc.",
+   "quote": "INOD",
+   "status": "ok",
+   "symbol": "INOD"
+  },
+  "IONQ": {
+   "currency": "USD",
+   "name": "IonQ, Inc.",
+   "quote": "IONQ",
+   "status": "ok",
+   "symbol": "IONQ"
+  },
+  "IPSC": {
+   "currency": "USD",
+   "name": "Century Therapeutics, Inc.",
+   "quote": "IPSC",
+   "status": "ok",
+   "symbol": "IPSC"
+  },
+  "IPX": {
+   "currency": "USD",
+   "name": "IperionX Limited",
+   "quote": "IPX",
+   "status": "ok",
+   "symbol": "IPX"
+  },
+  "IQMX": {
+   "currency": "USD",
+   "name": "IQM Quantum Computers Oyj",
+   "quote": "IQMX",
+   "status": "ok",
+   "symbol": "IQMX"
+  },
+  "JKS": {
+   "currency": "USD",
+   "name": "JinkoSolar Holding Company Limi",
+   "quote": "JKS",
+   "status": "ok",
+   "symbol": "JKS"
+  },
+  "KDK": {
+   "currency": "USD",
+   "name": "Kodiak AI, Inc.",
+   "quote": "KDK",
+   "status": "ok",
+   "symbol": "KDK"
+  },
+  "KOPN": {
+   "currency": "USD",
+   "name": "Kopin Corporation",
+   "quote": "KOPN",
+   "status": "ok",
+   "symbol": "KOPN"
+  },
+  "KRMN": {
+   "currency": "USD",
+   "name": "Karman Holdings Inc.",
+   "quote": "KRMN",
+   "status": "ok",
+   "symbol": "KRMN"
+  },
+  "LAES": {
+   "currency": "USD",
+   "name": "SEALSQ Corp",
+   "quote": "LAES",
+   "status": "ok",
+   "symbol": "LAES"
+  },
+  "LASR": {
+   "currency": "USD",
+   "name": "nLIGHT, Inc.",
+   "quote": "LASR",
+   "status": "ok",
+   "symbol": "LASR"
+  },
+  "LAW": {
+   "currency": "USD",
+   "name": "CS Disco, Inc.",
+   "quote": "LAW",
+   "status": "ok",
+   "symbol": "LAW"
+  },
+  "LCTX": {
+   "currency": "USD",
+   "name": "Lineage Cell Therapeutics, Inc.",
+   "quote": "LCTX",
+   "status": "ok",
+   "symbol": "LCTX"
+  },
+  "LEU": {
+   "currency": "USD",
+   "name": "Centrus Energy Corp.",
+   "quote": "LEU",
+   "status": "ok",
+   "symbol": "LEU"
+  },
+  "LMND": {
+   "currency": "USD",
+   "name": "Lemonade, Inc.",
+   "quote": "LMND",
+   "status": "ok",
+   "symbol": "LMND"
+  },
+  "LPTH": {
+   "currency": "USD",
+   "name": "LightPath Technologies, Inc.",
+   "quote": "LPTH",
+   "status": "ok",
+   "symbol": "LPTH"
+  },
+  "LTBR": {
+   "currency": "USD",
+   "name": "Lightbridge Corporation",
+   "quote": "LTBR",
+   "status": "ok",
+   "symbol": "LTBR"
+  },
+  "LUNR": {
+   "currency": "USD",
+   "name": "Intuitive Machines, Inc.",
+   "quote": "LUNR",
+   "status": "ok",
+   "symbol": "LUNR"
+  },
+  "LWLG": {
+   "currency": "USD",
+   "name": "Lightwave Logic, Inc.",
+   "quote": "LWLG",
+   "status": "ok",
+   "symbol": "LWLG"
+  },
+  "MBOT": {
+   "currency": "USD",
+   "name": "Microbot Medical Inc.",
+   "quote": "MBOT",
+   "status": "ok",
+   "symbol": "MBOT"
+  },
+  "MESO": {
+   "currency": "USD",
+   "name": "Mesoblast Limited",
+   "quote": "MESO",
+   "status": "ok",
+   "symbol": "MESO"
+  },
+  "MGX": {
+   "currency": "USD",
+   "name": "Metagenomi Therapeutics, Inc.",
+   "quote": "MGX",
+   "status": "ok",
+   "symbol": "MGX"
+  },
+  "MXCT": {
+   "currency": "USD",
+   "name": "MaxCyte, Inc.",
+   "quote": "MXCT",
+   "status": "ok",
+   "symbol": "MXCT"
+  },
+  "NNE": {
+   "currency": "USD",
+   "name": "Nano Nuclear Energy Inc.",
+   "quote": "NNE",
+   "status": "ok",
+   "symbol": "NNE"
+  },
+  "NNOX": {
+   "currency": "USD",
+   "name": "Nano-X Imaging Ltd",
+   "quote": "NNOX",
+   "status": "ok",
+   "symbol": "NNOX"
+  },
+  "NP": {
+   "currency": "USD",
+   "name": "Neptune Insurance Holdings Inc.",
+   "quote": "NP",
+   "status": "ok",
+   "symbol": "NP"
+  },
+  "NTLA": {
+   "currency": "USD",
+   "name": "Intellia Therapeutics, Inc.",
+   "quote": "NTLA",
+   "status": "ok",
+   "symbol": "NTLA"
+  },
+  "NTSK": {
+   "currency": "USD",
+   "name": "Netskope, Inc.",
+   "quote": "NTSK",
+   "status": "ok",
+   "symbol": "NTSK"
+  },
+  "NVTS": {
+   "currency": "USD",
+   "name": "Navitas Semiconductor Corporati",
+   "quote": "NVTS",
+   "status": "ok",
+   "symbol": "NVTS"
+  },
+  "NXT": {
+   "currency": "USD",
+   "name": "Nextpower Inc.",
+   "quote": "NXT",
+   "status": "ok",
+   "symbol": "NXT"
+  },
+  "OKLO": {
+   "currency": "USD",
+   "name": "Oklo Inc.",
+   "quote": "OKLO",
+   "status": "ok",
+   "symbol": "OKLO"
+  },
+  "OUST": {
+   "currency": "USD",
+   "name": "Ouster, Inc.",
+   "quote": "OUST",
+   "status": "ok",
+   "symbol": "OUST"
+  },
+  "PACB": {
+   "currency": "USD",
+   "name": "Pacific Biosciences of Californ",
+   "quote": "PACB",
+   "status": "ok",
+   "symbol": "PACB"
+  },
+  "PATH": {
+   "currency": "USD",
+   "name": "UiPath, Inc.",
+   "quote": "PATH",
+   "status": "ok",
+   "symbol": "PATH"
+  },
+  "PDYN": {
+   "currency": "USD",
+   "name": "Palladyne AI Corp.",
+   "quote": "PDYN",
+   "status": "ok",
+   "symbol": "PDYN"
+  },
+  "PERI": {
+   "currency": "USD",
+   "name": "Perion Network Ltd",
+   "quote": "PERI",
+   "status": "ok",
+   "symbol": "PERI"
+  },
+  "PGEN": {
+   "currency": "USD",
+   "name": "Precigen, Inc.",
+   "quote": "PGEN",
+   "status": "ok",
+   "symbol": "PGEN"
+  },
+  "PGY": {
+   "currency": "USD",
+   "name": "Pagaya Technologies Ltd.",
+   "quote": "PGY",
+   "status": "ok",
+   "symbol": "PGY"
+  },
+  "PL": {
+   "currency": "USD",
+   "name": "Planet Labs PBC",
+   "quote": "PL",
+   "status": "ok",
+   "symbol": "PL"
+  },
+  "POET": {
+   "currency": "USD",
+   "name": "POET Technologies Inc.",
+   "quote": "POET",
+   "status": "ok",
+   "symbol": "POET"
+  },
+  "PONY": {
+   "currency": "USD",
+   "name": "Pony AI Inc.",
+   "quote": "PONY",
+   "status": "ok",
+   "symbol": "PONY"
+  },
+  "PRCT": {
+   "currency": "USD",
+   "name": "PROCEPT BioRobotics Corporation",
+   "quote": "PRCT",
+   "status": "ok",
+   "symbol": "PRCT"
+  },
+  "PRME": {
+   "currency": "USD",
+   "name": "Prime Medicine, Inc.",
+   "quote": "PRME",
+   "status": "ok",
+   "symbol": "PRME"
+  },
+  "PSQL": {
+   "currency": "USD",
+   "name": "Pasqal Holding SA",
+   "quote": "PSQL",
+   "status": "ok",
+   "symbol": "PSQL"
+  },
+  "PUBM": {
+   "currency": "USD",
+   "name": "PubMatic, Inc.",
+   "quote": "PUBM",
+   "status": "ok",
+   "symbol": "PUBM"
+  },
+  "QNT": {
+   "currency": "USD",
+   "name": "Quantinuum Inc.",
+   "quote": "QNT",
+   "status": "ok",
+   "symbol": "QNT"
+  },
+  "QS": {
+   "currency": "USD",
+   "name": "QuantumScape Corporation",
+   "quote": "QS",
+   "status": "ok",
+   "symbol": "QS"
+  },
+  "QSI": {
+   "currency": "USD",
+   "name": "Quantum-Si Incorporated",
+   "quote": "QSI",
+   "status": "ok",
+   "symbol": "QSI"
+  },
+  "RBRK": {
+   "currency": "USD",
+   "name": "Rubrik, Inc.",
+   "quote": "RBRK",
+   "status": "ok",
+   "symbol": "RBRK"
+  },
+  "RDW": {
+   "currency": "USD",
+   "name": "Redwire Corporation",
+   "quote": "RDW",
+   "status": "ok",
+   "symbol": "RDW"
+  },
+  "RKLB": {
+   "currency": "USD",
+   "name": "Rocket Lab Corporation",
+   "quote": "RKLB",
+   "status": "ok",
+   "symbol": "RKLB"
+  },
+  "ROOT": {
+   "currency": "USD",
+   "name": "Root, Inc.",
+   "quote": "ROOT",
+   "status": "ok",
+   "symbol": "ROOT"
+  },
+  "RR": {
+   "currency": "USD",
+   "name": "Richtech Robotics Inc.",
+   "quote": "RR",
+   "status": "ok",
+   "symbol": "RR"
+  },
+  "RXRX": {
+   "currency": "USD",
+   "name": "Recursion Pharmaceuticals, Inc.",
+   "quote": "RXRX",
+   "status": "ok",
+   "symbol": "RXRX"
+  },
+  "RZLV": {
+   "currency": "USD",
+   "name": "Rezolve AI PLC",
+   "quote": "RZLV",
+   "status": "ok",
+   "symbol": "RZLV"
+  },
+  "S": {
+   "currency": "USD",
+   "name": "SentinelOne, Inc.",
+   "quote": "S",
+   "status": "ok",
+   "symbol": "S"
+  },
+  "SAIL": {
+   "currency": "USD",
+   "name": "SailPoint, Inc.",
+   "quote": "SAIL",
+   "status": "ok",
+   "symbol": "SAIL"
+  },
+  "SANA": {
+   "currency": "USD",
+   "name": "Sana Biotechnology, Inc.",
+   "quote": "SANA",
+   "status": "ok",
+   "symbol": "SANA"
+  },
+  "SCTX": {
+   "currency": "USD",
+   "name": "Scribe Therapeutics Inc.",
+   "quote": "SCTX",
+   "status": "ok",
+   "symbol": "SCTX"
+  },
+  "SDGR": {
+   "currency": "USD",
+   "name": "Schrodinger, Inc.",
+   "quote": "SDGR",
+   "status": "ok",
+   "symbol": "SDGR"
+  },
+  "SERV": {
+   "currency": "USD",
+   "name": "Serve Robotics Inc.",
+   "quote": "SERV",
+   "status": "ok",
+   "symbol": "SERV"
+  },
+  "SHLS": {
+   "currency": "USD",
+   "name": "Shoals Technologies Group, Inc.",
+   "quote": "SHLS",
+   "status": "ok",
+   "symbol": "SHLS"
+  },
+  "SMR": {
+   "currency": "USD",
+   "name": "NuScale Power Corporation",
+   "quote": "SMR",
+   "status": "ok",
+   "symbol": "SMR"
+  },
+  "SOPH": {
+   "currency": "USD",
+   "name": "SOPHiA GENETICS SA",
+   "quote": "SOPH",
+   "status": "ok",
+   "symbol": "SOPH"
+  },
+  "SOUN": {
+   "currency": "USD",
+   "name": "SoundHound AI, Inc.",
+   "quote": "SOUN",
+   "status": "ok",
+   "symbol": "SOUN"
+  },
+  "SPIR": {
+   "currency": "USD",
+   "name": "Spire Global, Inc.",
+   "quote": "SPIR",
+   "status": "ok",
+   "symbol": "SPIR"
+  },
+  "SYM": {
+   "currency": "USD",
+   "name": "Symbotic Inc.",
+   "quote": "SYM",
+   "status": "ok",
+   "symbol": "SYM"
+  },
+  "TE": {
+   "currency": "USD",
+   "name": "T1 Energy Inc.",
+   "quote": "TE",
+   "status": "ok",
+   "symbol": "TE"
+  },
+  "TEM": {
+   "currency": "USD",
+   "name": "Tempus AI, Inc.",
+   "quote": "TEM",
+   "status": "ok",
+   "symbol": "TEM"
+  },
+  "TWST": {
+   "currency": "USD",
+   "name": "Twist Bioscience Corporation",
+   "quote": "TWST",
+   "status": "ok",
+   "symbol": "TWST"
+  },
+  "TYGO": {
+   "currency": "USD",
+   "name": "Tigo Energy, Inc.",
+   "quote": "TYGO",
+   "status": "ok",
+   "symbol": "TYGO"
+  },
+  "UPST": {
+   "currency": "USD",
+   "name": "Upstart Holdings, Inc.",
+   "quote": "UPST",
+   "status": "ok",
+   "symbol": "UPST"
+  },
+  "USAR": {
+   "currency": "USD",
+   "name": "USA Rare Earth, Inc.",
+   "quote": "USAR",
+   "status": "ok",
+   "symbol": "USAR"
+  },
+  "VOYG": {
+   "currency": "USD",
+   "name": "Voyager Technologies, Inc.",
+   "quote": "VOYG",
+   "status": "ok",
+   "symbol": "VOYG"
+  },
+  "WRD": {
+   "currency": "USD",
+   "name": "WeRide Inc.",
+   "quote": "WRD",
+   "status": "ok",
+   "symbol": "WRD"
+  },
+  "XE": {
+   "currency": "USD",
+   "name": "X-Energy, Inc.",
+   "quote": "XE",
+   "status": "ok",
+   "symbol": "XE"
+  },
+  "XNDU": {
+   "currency": "USD",
+   "name": "Xanadu Quantum Technologies Lim",
+   "quote": "XNDU",
+   "status": "ok",
+   "symbol": "XNDU"
+  },
+  "ZETA": {
+   "currency": "USD",
+   "name": "Zeta Global Holdings Corp.",
+   "quote": "ZETA",
+   "status": "ok",
+   "symbol": "ZETA"
+  }
+ }
+}
