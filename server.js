@@ -15,12 +15,15 @@ const ADMIN_KEY = process.env.ADMIN_KEY || "";
 const REFRESH_COOLDOWN_MS = Number(process.env.REFRESH_COOLDOWN_SEC || 60) * 1000;
 const DAILY_CRON = process.env.DAILY_CRON || "20 15 * * 1-5";
 
-// First start with an external DATA_DIR (hosts that wipe the app folder on redeploy):
-// copy the bundled ./data in, so the imported watchlist, history and settings carry over.
-const bundled = path.join(__dirname, "data");
-if (!store.read("config/universe") && path.resolve(store.DIR) !== bundled && fs.existsSync(path.join(bundled, "config", "universe.json"))) {
-  fs.cpSync(bundled, store.DIR, { recursive: true });
-  console.log("[seed] copied bundled data into", store.DIR);
+// First start with an empty DATA_DIR: copy in bundled data, so the watchlist, history and
+// alerts carry over. ./data comes with a zip upload; seed/data is the snapshot kept in Git.
+if (!store.read("config/universe")) {
+  const bundled = [path.join(__dirname, "data"), path.join(__dirname, "seed", "data")]
+    .find((d) => path.resolve(store.DIR) !== d && fs.existsSync(path.join(d, "config", "universe.json")));
+  if (bundled) {
+    fs.cpSync(bundled, store.DIR, { recursive: true });
+    console.log("[seed] copied", path.relative(__dirname, bundled), "into", store.DIR);
+  }
 }
 // Otherwise seed the watchlist from the CSV the first time the server starts.
 if (!store.read("config/universe")) {

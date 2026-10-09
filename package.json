@@ -14,7 +14,8 @@
     "daily": "node scripts/run-daily.js",
     "bench": "node scripts/bench.js",
     "import-claude": "node scripts/import-claude.js",
-    "build:dist": "node scripts/build-dist.js"
+    "build:dist": "node scripts/build-dist.js",
+    "seed:snapshot": "node scripts/make-seed.js"
   },
   "dependencies": {
     "dotenv": "^16.4.5",

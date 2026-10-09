@@ -9,7 +9,10 @@ const { execFileSync } = require("child_process");
 const root = path.join(__dirname, "..");
 const dist = path.join(root, "dist");
 const src = path.join(root, "hostinger");
-const data = path.resolve(process.env.DATA_DIR || path.join(root, "data"));
+// Your live data/ when building locally; the seed/data snapshot when building from Git.
+const data = [process.env.DATA_DIR, path.join(root, "data"), path.join(root, "seed", "data")]
+  .filter(Boolean).map((d) => path.resolve(d)).find((d) => fs.existsSync(path.join(d, "config", "universe.json")));
+if (!data) { console.error("No watchlist data found (data/ or seed/data/)."); process.exit(1); }
 
 fs.rmSync(dist, { recursive: true, force: true });
 fs.mkdirSync(dist);
