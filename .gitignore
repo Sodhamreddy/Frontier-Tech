@@ -1,0 +1,9 @@
+node_modules/
+# Secrets and live data: never committed
+.env
+data/
+claude-export.json
+hostinger/api/config.php
+# Build output
+dist/
+*.zip

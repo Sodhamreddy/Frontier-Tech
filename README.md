@@ -90,6 +90,15 @@ docker run -d --restart=always -p 3000:3000 -v watchlist-data:/data --env-file .
 
 Serverless hosts with no disk (Vercel, Netlify) won't work as-is.
 
+**Shared PHP hosting (Hostinger Business etc.)**: `hostinger/` is a PHP version of the server with the same API, so the same page works on plain PHP hosting with no Node app.
+
+1. `npm run build:dist` builds `dist/` and `frontier-watchlist-dist.zip`: the page, `api/` (PHP), `.htaccess` routing, and your current data as `data-initial/` (copied into `data/` on first run only, so uploading a new version never overwrites live data).
+2. Upload the zip's contents to `public_html` and extract.
+3. Copy `api/config.sample.php` to `api/config.php` and fill in `admin_key`, the SMTP settings and `app_url`. `config.php` is never part of the build, so later uploads keep it.
+4. In hPanel → Advanced → Cron Jobs, run every 5 minutes: `/usr/bin/php /home/USER/domains/DOMAIN/public_html/api/cron.php`. It does the auto-refresh in market hours and the daily close after 3:20 PM CT.
+
+Data, settings and `config.php` are blocked from the web by `.htaccess`. To test locally, copy `hostinger/dev-router.php` into `dist/`, then run `php -S localhost:8080 dev-router.php` inside `dist/`.
+
 ## 4. Email setup
 
 **Why this needs a mail account:** on claude.ai the daily email is sent by a Claude scheduled routine, a Claude agent running in the artifact owner's account with its own email access. That routine isn't part of this code and keeps running on its own; it reads and writes the claude.ai copy of the data, not this server. A self-hosted app has to send its own email, and that takes a mail account.
@@ -116,5 +125,4 @@ curl -X POST -H "x-admin-key: $ADMIN_KEY" -H "Content-Type: text/csv" \
 
 - The Refresh button is public but rate-limited (one run at a time, a 60 s cooldown). It never sends email.
 - If no quote is stamped with today's date (a market holiday), the daily job skips that day.
-- Thresholds, benchmark date, schedule and email settings are all in `.env`. The page text still says "29 Sep" and "−5%", so edit `public/index.html` if you change `BENCH_DATE` or `ALERT_PCT`.
-# Frontier-Tech
+- The alert line, spike threshold, benchmark date, auto-refresh and email address are changed on the Settings page; `.env` only supplies the starting values. The page text follows the saved settings.

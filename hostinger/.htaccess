@@ -1,0 +1,27 @@
+# Frontier Tech Watchlist on PHP hosting (Hostinger and other Apache/LiteSpeed hosts).
+DirectoryIndex index.html
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Pass the admin key header through to PHP.
+  RewriteCond %{HTTP:X-Admin-Key} .
+  RewriteRule .* - [E=HTTP_X_ADMIN_KEY:%{HTTP:X-Admin-Key}]
+  # Every /api/... request goes to api/index.php (except the PHP files themselves).
+  RewriteCond %{REQUEST_URI} !/api/(index|cron)\.php$
+  RewriteRule ^api/(.*)$ api/index.php?route=$1 [QSA,L]
+</IfModule>
+
+# Never serve data, settings, secrets or server code directly.
+<FilesMatch "^(config\.php|config\.sample\.php|\.jobs\.lock)$">
+  Require all denied
+</FilesMatch>
+RedirectMatch 404 ^/(data|data-initial)(/|$)
+RedirectMatch 404 ^/api/lib(/|$)
+
+# HTML is revalidated on every load so a new version shows without a hard refresh.
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

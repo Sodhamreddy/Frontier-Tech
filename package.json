@@ -1,0 +1,25 @@
+{
+  "name": "frontier-tech-watchlist",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Frontier Tech Watchlist: price watch vs the 29 Sep 2026 close, with alert line, refresh button and daily email.",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.17"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "import": "node scripts/import-csv.js",
+    "daily": "node scripts/run-daily.js",
+    "bench": "node scripts/bench.js",
+    "import-claude": "node scripts/import-claude.js",
+    "build:dist": "node scripts/build-dist.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.16"
+  }
+}

@@ -1,0 +1,643 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Frontier Tech Watchlist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a ledger. Summary strip, then the alert line, then one table per subcategory from the sheet. */
+:root{
+  --bg:#eef1f4; --panel:#ffffff; --ink:#15212e; --muted:#5b6876; --rule:#d5dbe2; --rule-soft:#e6eaef;
+  --accent:#1f5f8b; --accent-soft:#dbe8f2; --gpt:#8a4f9e;
+  --up:#1d7a4c; --up-soft:#dcf0e5; --down:#b4372b; --down-soft:#f7e0dc; --warn:#9a6a00; --warn-soft:#f6ecd2;
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Public Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f151c; --panel:#161e27; --ink:#e3e9ef; --muted:#93a1b0; --rule:#2a3642; --rule-soft:#212b36;
+  --accent:#7fb6dd; --accent-soft:#1c3346; --gpt:#c79be0;
+  --up:#5cc98f; --up-soft:#173527; --down:#f08a7c; --down-soft:#3d1f1b; --warn:#e2b54d; --warn-soft:#3a2f14; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f151c; --panel:#161e27; --ink:#e3e9ef; --muted:#93a1b0; --rule:#2a3642; --rule-soft:#212b36;
+  --accent:#7fb6dd; --accent-soft:#1c3346; --gpt:#c79be0;
+  --up:#5cc98f; --up-soft:#173527; --down:#f08a7c; --down-soft:#3d1f1b; --warn:#e2b54d; --warn-soft:#3a2f14; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--body);padding-inline:16px;padding-block:28px 56px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
+h1{font-size:clamp(28px,4.4vw,44px);font-weight:800;font-stretch:78%;letter-spacing:-.01em;line-height:1.05}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--muted);font-size:13.5px;margin-top:10px}
+.meta b{color:var(--ink);font-weight:600}
+.refresh{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:14px}
+#refreshBtn{font:600 14px var(--body);color:var(--panel);background:var(--accent);border:0;border-radius:8px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+#refreshBtn:hover{filter:brightness(1.08)}
+#refreshBtn[disabled]{opacity:.6;cursor:progress}
+#refreshBtn .spin{width:12px;height:12px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;display:inline-block}
+@media (prefers-reduced-motion:no-preference){#refreshBtn .spin{animation:spin 1s linear infinite}}
+@keyframes spin{to{transform:rotate(360deg)}}
+#refreshMsg{font-size:13px;color:var(--muted);max-width:70ch}
+#refreshMsg.ok{color:var(--up)} #refreshMsg.err{color:var(--down)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.tile{background:var(--panel);padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tile .v{font:600 26px/1.1 var(--mono);font-variant-numeric:tabular-nums}
+.tile .s{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.line{border:1px solid var(--rule);border-radius:10px;background:var(--panel);padding:16px;display:flex;flex-direction:column;gap:12px}
+.line.hot{border-color:var(--down);box-shadow:inset 4px 0 0 var(--down)}
+.line h2{font-size:19px;font-weight:700;font-stretch:90%}
+.line p{margin:0;color:var(--muted);font-size:14px;max-width:70ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:baseline;gap:8px;padding:6px 10px;border-radius:6px;background:var(--down-soft);color:var(--down);font:500 13px/1.2 var(--mono)}
+.chip b{font-weight:600;color:var(--ink)}
+.chip .new{font:600 10px/1 var(--mono);letter-spacing:.08em;background:var(--down);color:var(--panel);padding:3px 5px;border-radius:3px}
+
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;position:sticky;top:env(safe-area-inset-top,0px);z-index:2;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--rule)}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:var(--panel)}
+.seg button{border:0;background:none;color:var(--muted);font:500 13px/1 var(--body);padding:9px 12px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--rule)}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+input[type=search],select{font:14px var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:8px 10px;min-width:0}
+input[type=search]{flex:1 1 180px;max-width:280px}
+.secs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.secs[hidden]{display:none}
+.secs .lab{font:600 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.secs button{font:500 12.5px/1 var(--body);color:var(--muted);background:var(--panel);border:1px solid var(--rule);border-radius:999px;padding:6px 11px;cursor:pointer;display:inline-flex;gap:6px;align-items:baseline}
+.secs button .n{font:500 11px/1 var(--mono);opacity:.75}
+.secs button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+.secs button.clear{border-style:dashed}
+label.tog{display:inline-flex;gap:6px;align-items:center;font-size:13.5px;color:var(--muted);cursor:pointer}
+th button.sort{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:3px;font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit;line-height:1.25;text-align:inherit}
+th:not(.l) button.sort{flex-direction:row-reverse}
+th button.sort .ar{font-size:11px;opacity:.35;letter-spacing:0}
+th button.sort:hover{color:var(--ink)} th button.sort:hover .ar{opacity:.8}
+th[aria-sort] button.sort{color:var(--accent)} th[aria-sort] button.sort .ar{opacity:1}
+.sorthint{font-size:13px;color:var(--muted);display:inline-flex;gap:8px;align-items:center}
+.sorthint b{color:var(--ink);font-weight:600}
+.sorthint button{font:500 12.5px var(--body);color:var(--accent);background:none;border:1px solid var(--rule);border-radius:999px;padding:4px 10px;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,th button.sort:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,540px),1fr));gap:20px;align-items:start}
+.cat{background:var(--panel);border:1px solid var(--rule);border-radius:10px;min-width:0;container-type:inline-size}
+.cat header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:14px 16px 10px;flex-wrap:wrap}
+.cat h3{font-size:17px;font-weight:700;font-stretch:88%}
+.cat .fam,.ctable .fam{font:600 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+.cat .agg{font-size:12.5px;color:var(--muted);text-align:right}
+.tbl{overflow:visible}
+table{width:100%;border-collapse:collapse;font-size:13.5px;table-layout:auto}
+th{font:600 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;padding:8px 8px;border-bottom:1px solid var(--rule);white-space:normal;line-height:1.25;vertical-align:bottom}
+th:first-child,td:first-child{padding-left:16px}
+th:last-child,td:last-child{padding-right:16px}
+th.l,td.l{text-align:left}
+td{padding:7px 8px;border-bottom:1px solid var(--rule-soft);text-align:right;vertical-align:middle;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.tk{font:600 13px var(--mono);white-space:normal;min-width:48px}
+td.co{color:var(--muted);white-space:normal;overflow-wrap:break-word;min-width:72px;line-height:1.3}
+td.co span.note{display:block;font-size:11.5px;color:var(--warn);white-space:normal}
+tr.alert td{background:var(--down-soft)}
+tr.alert td.tk{box-shadow:inset 3px 0 0 var(--down)}
+tr.muted td{color:var(--muted)}
+.cur{font-size:10.5px;color:var(--muted);margin-left:3px}
+.chg{display:inline-flex;align-items:center;gap:8px;justify-content:flex-end}
+.chg .p{min-width:62px;text-align:right;font-weight:600}
+.up{color:var(--up)} .down{color:var(--down)} .flat{color:var(--muted)}
+.bar{width:44px;height:8px;position:relative;background:var(--rule-soft);border-radius:2px}
+.bar::after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--muted)}
+.bar i{position:absolute;top:0;bottom:0;border-radius:2px}
+.bar i.up{background:var(--up)} .bar i.down{background:var(--down)}
+.bar .thr{position:absolute;top:-3px;bottom:-3px;width:1px;background:var(--down);opacity:.6}
+svg.spark{display:block}
+.pill{display:inline-block;font:600 10px/1 var(--mono);letter-spacing:.06em;padding:3px 6px;border-radius:3px;background:var(--rule-soft);color:var(--muted);text-transform:uppercase}
+.full{grid-column:1/-1;display:flex;flex-direction:column;gap:20px;min-width:0}
+.insights{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:20px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:16px;min-width:0;display:flex;flex-direction:column;gap:10px}
+.card h3{font-size:16px;font-weight:700;font-stretch:88%}
+.card .sub{margin:0;color:var(--muted);font-size:13px;line-height:1.45}
+.card .take{margin:0;font-size:13.5px;line-height:1.45;border-top:1px solid var(--rule-soft);padding-top:10px}
+.card table th:first-child,.card table td:first-child{padding-left:0}
+.card table th:last-child,.card table td:last-child{padding-right:0}
+.card table td{white-space:normal}
+table.heat td.h{text-align:center;font:600 13px var(--mono);font-variant-numeric:tabular-nums;border:2px solid var(--panel);border-radius:6px;padding:10px 4px;line-height:1.2}
+table.heat td.h small{display:block;font:400 10.5px var(--body);color:var(--muted);margin-top:2px}
+table.heat th{text-align:center}
+.who{display:inline-flex;align-items:center;gap:6px;font-weight:600}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;flex:none}
+.sw.c{background:var(--accent)} .sw.g{background:var(--gpt)} .sw.b{background:linear-gradient(135deg,var(--accent) 50%,var(--gpt) 50%)}
+svg.strip{width:100%;height:auto;display:block}
+svg.strip text{fill:var(--muted);font:10px var(--mono)}
+svg.strip text.lbl{fill:var(--ink);font-weight:600}
+.ctable{background:var(--panel);border:1px solid var(--rule);border-radius:10px;min-width:0;container-type:inline-size}
+.ctable header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;padding:14px 16px 10px;align-items:baseline}
+.ctable h3{font-size:17px;font-weight:700;font-stretch:88%}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted);align-items:center}
+.mx{display:inline-flex;gap:3px;align-items:center;vertical-align:middle}
+.mx .d{width:11px;height:11px;border-radius:2px;border:1px solid var(--rule);background:var(--rule-soft)}
+.mx .d.c{background:var(--accent);border-color:var(--accent)} .mx .d.g{background:var(--gpt);border-color:var(--gpt)}
+.mx .gap{width:5px}
+td.mn b{font:600 16px var(--mono)} td.mn .of{color:var(--muted);font:12px var(--mono)} td.mn small{display:block;font:11px var(--mono);color:var(--muted)}
+td.rk{color:var(--muted);font:12px var(--mono)}
+td.co .sec{display:block;font-size:11.5px;color:var(--muted);opacity:.85}
+.ctable .mxn{display:none;margin-top:5px}
+.ctable .bm{display:none;font:11px var(--mono);color:var(--muted)}
+td.tk .cn{display:none;overflow-wrap:break-word;font:400 11.5px var(--body);color:var(--muted);white-space:normal}
+@container (max-width:700px){ .ctable .spk{display:none} }
+@container (max-width:560px){ .ctable .bar{display:none} .ctable td.rk,.ctable th.rk{display:none} .mx .d{width:9px;height:9px} .mx{gap:2px} }
+@container (max-width:470px){ .ctable td.co,.ctable th.co{display:none} .ctable td.tk .cn{display:block} .ctable td.tk{white-space:normal;min-width:118px} .ctable .mxc{display:none} .ctable .mxn{display:block} .ctable .bmc{display:none} .ctable .bm{display:block} .mx .d{width:8px;height:8px} .mx{gap:1.5px} .mx .gap{width:3px} .ctable th,.ctable td{padding-inline:5px} .ctable th:first-child,.ctable td:first-child{padding-left:12px} .ctable th:last-child,.ctable td:last-child{padding-right:12px} .ctable table{font-size:12.5px} .ctable th{font-size:9.5px;letter-spacing:.02em} }
+.empty{padding:40px 16px;text-align:center;color:var(--muted);background:var(--panel);border:1px dashed var(--rule);border-radius:10px}
+footer{color:var(--muted);font-size:12.5px;line-height:1.6;max-width:90ch}
+@container (max-width:620px){ .cur{display:block;margin-left:0;line-height:1.1} }
+@container (max-width:540px){ .spk{display:none} }
+@container (max-width:440px){ .bar{display:none} .chg .p{min-width:0} th,td{padding-inline:6px} th:first-child,td:first-child{padding-left:12px} th:last-child,td:last-child{padding-right:12px} table{font-size:12.5px} td.tk{font-size:12px} th{font-size:9.5px;letter-spacing:.02em} td.co{min-width:0;overflow-wrap:anywhere} }
+@media (prefers-reduced-motion:no-preference){ tr{transition:background-color .2s} }
+/* Sector tables on narrow cards: company moves under the ticker */
+@container (max-width:440px){ .cat td.co,.cat th.co{display:none} .cat td.tk .cn{display:block;margin-top:2px;line-height:1.3} .cat td.tk .cn .note{display:block;font-size:11px;color:var(--warn)} .cat td.tk{min-width:120px;white-space:normal} }
+/* Phones */
+@media (max-width:640px){
+  body{font-size:14.5px;padding-block:18px 40px}
+  .wrap{gap:18px}
+  .meta{font-size:13px;gap:4px 14px}
+  #refreshBtn{width:100%;justify-content:center;padding:12px 16px;font-size:15px}
+  #refreshMsg{font-size:12.5px}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tile:last-child:nth-child(odd){grid-column:1/-1}
+  .tile{padding:12px 14px;gap:4px}
+  .tile .v{font-size:22px}
+  .line{padding:14px}
+  .line h2{font-size:17px}
+  .chip{padding:5px 8px;font-size:12.5px}
+  .controls{gap:8px;padding-block:8px;margin-inline:-16px;padding-inline:16px;box-shadow:0 6px 10px -10px rgba(0,0,0,.35)}
+  .seg{display:flex;width:100%;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+  .seg::-webkit-scrollbar,.secs::-webkit-scrollbar{display:none}
+  .seg button{flex:1 0 auto;white-space:nowrap;padding:11px 13px;font-size:13.5px;scroll-snap-align:start}
+  input[type=search]{flex:1 1 0;max-width:none;font-size:16px;padding:8px 10px}
+  label.tog{font-size:13px;flex:none}
+  .sorthint.idle{display:none}
+  .sorthint{flex-basis:100%;font-size:12.5px}
+  .secs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px;-webkit-overflow-scrolling:touch}
+  .secs .lab,.secs button{flex:none;white-space:nowrap}
+  .secs button{padding:7px 12px}
+  .cats{gap:14px}
+  .cat header,.ctable header{padding:12px 12px 8px}
+  .cat .agg{text-align:left}
+  .insights{gap:14px}
+  .card{padding:14px}
+  td{padding-block:9px}
+  footer{font-size:12px}
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Cutting-edge tech · price watch</div>
+    <h1 style="margin-top:8px">Frontier Tech Watchlist</h1>
+    <div class="meta" id="meta">
+      <span>Benchmark <b>close, Tue 29 Sep 2026</b></span>
+      <span>Alert line <b class="num">−5.0%</b></span>
+      <span id="refreshed">Loading prices…</span>
+    </div>
+    <div class="refresh">
+      <button type="button" id="refreshBtn">Refresh prices now</button>
+      <span id="refreshMsg" aria-live="polite">Fetches current prices on the server and recalculates every change. Usually takes under a minute.</span>
+    </div>
+  </header>
+
+  <section class="tiles" id="tiles" aria-label="Summary"></section>
+
+  <section class="line" id="line" aria-live="polite"></section>
+
+  <nav class="controls" aria-label="Filters">
+    <div class="seg" role="group" aria-label="List family" id="famSeg">
+      <button type="button" data-f="Sectors" aria-pressed="true">Sectors</button>
+      <button type="button" data-f="Consensus" aria-pressed="false">Consensus</button>
+      <button type="button" data-f="Claude picks" aria-pressed="false">Claude picks</button>
+      <button type="button" data-f="GPT picks" aria-pressed="false">GPT picks</button>
+      <button type="button" data-f="My Favorites" aria-pressed="false">My Favorites</button>
+    </div>
+    <input type="search" id="q" placeholder="Find a ticker or company" aria-label="Find a ticker or company">
+    <span class="sorthint" id="sortHint" aria-live="polite"></span>
+    <label class="tog"><input type="checkbox" id="onlyAlerts"> Only at or below −5%</label>
+    <div class="secs" id="secs" role="group" aria-label="Filter by sector" hidden></div>
+    <div class="secs" id="cons" role="group" aria-label="Filter by model" hidden></div>
+  </nav>
+
+  <main id="cats" class="cats">
+    <div class="empty" id="empty">Your subcategories and prices load here from the watchlist database.</div>
+  </main>
+
+  <footer id="foot">
+    The 29 Sep 2026 benchmark is the regular-session close from Yahoo Finance. Daily closes and live prices come from Yahoo Finance. “Current” is the latest weekday close, recorded at 3:20 PM CT, or the live price from your most recent Refresh if that is newer. Only US-traded names with a quote are tracked; private companies and foreign listings from your sheet are left out. A stock in several lists is tracked once and shown in each. A summary email goes to <span id="emailTo">the configured address</span> after every weekday close, highlighting big drops and big spikes against the 29 Sep close.
+  </footer>
+</div>
+
+<script>
+(function(){
+  const S={main:null,uni:null,bench:null,latest:null,live:null,alerts:null,hist:{}};
+  const FAMS=["Sectors","Consensus","Claude picks","GPT picks","My Favorites"];
+  const ui={fam:"Sectors",q:"",col:null,dir:"asc",only:false,secs:[],who:"all"};
+  try{const v=JSON.parse(localStorage.getItem("ftw-ui")||"null");if(v)Object.assign(ui,v)}catch(e){}
+  if(!FAMS.includes(ui.fam)) ui.fam="Sectors";
+  if(!Array.isArray(ui.secs)) ui.secs=[];
+  delete ui.sort; if(ui.dir!=="asc"&&ui.dir!=="desc") ui.dir="asc";
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const THR=-5;
+  const fmtP=v=>v==null?"—":(v>=1000?v.toLocaleString("en-US",{maximumFractionDigits:0}):v>=1?v.toFixed(2):v.toFixed(4));
+  const fmtPct=v=>v==null?"—":(v>0?"+":v<0?"−":"")+Math.abs(v).toFixed(2)+"%";
+  const cls=v=>v==null?"flat":v>0.005?"up":v<-0.005?"down":"flat";
+
+  function curQ(){const a=S.latest,b=S.live; if(b&&b.prices&&(!a||Date.parse(b.asOf)>Date.parse(a.asOf))) return b; return a;}
+  function pct(k){const b=S.bench?.prices?.[k], c=curQ()?.prices?.[k]; if(b==null||c==null||!b) return null; return (c/b-1)*100;}
+  function series(k){const days=[];for(const m of Object.keys(S.hist).sort()){const d=S.hist[m]?.days||{};for(const day of Object.keys(d).sort()){const v=d[day]?.[k];if(v!=null)days.push([day,v])}}return days;}
+  function spark(k){
+    const s=series(k); if(s.length<2) return '<span class="pill" title="Trend appears after the next refresh">new</span>';
+    const w=64,h=20,vals=s.map(x=>x[1]),b=S.bench?.prices?.[k]??vals[0];
+    const lo=Math.min(...vals,b),hi=Math.max(...vals,b),r=hi-lo||1;
+    const X=i=>(i/(s.length-1))*(w-4)+2, Y=v=>h-2-((v-lo)/r)*(h-4);
+    const pts=vals.map((v,i)=>X(i).toFixed(1)+","+Y(v).toFixed(1)).join(" ");
+    const last=vals[vals.length-1], c=last>=b?"var(--up)":"var(--down)";
+    return `<svg class="spark" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true"><line x1="2" x2="${w-2}" y1="${Y(b).toFixed(1)}" y2="${Y(b).toFixed(1)}" stroke="var(--rule)" stroke-dasharray="2 2"/><polyline points="${pts}" fill="none" stroke="${c}" stroke-width="1.5"/><circle cx="${X(vals.length-1).toFixed(1)}" cy="${Y(last).toFixed(1)}" r="2" fill="${c}"/></svg>`;
+  }
+  function bar(p){
+    if(p==null) return '<span class="bar"></span>';
+    const span=20, v=Math.max(-span,Math.min(span,p)), wpc=Math.abs(v)/span*50;
+    const left=v>=0?50:50-wpc, thr=50+THR/span*50;
+    return `<span class="bar" aria-hidden="true"><span class="thr" style="left:${thr}%"></span><i class="${v>=0?"up":"down"}" style="left:${left}%;width:${wpc}%"></i></span>`;
+  }
+
+  // ---------- column sorting (shared by every table) ----------
+  function dayChg(k){const s=series(k); if(s.length<2) return null; const a=s[s.length-2][1], b=s[s.length-1][1]; return a?(b/a-1)*100:null;}
+  const COLS={
+    rank:{label:"Rank",get:r=>r.rank,t:"n",first:"asc"},
+    sym:{label:"Ticker",get:r=>r.s.symbol,t:"s"},
+    name:{label:"Company",get:r=>r.s.name||"",t:"s"},
+    mx:{label:"Picked in",get:r=>r.cN*10+r.gN,t:"n"},
+    n:{label:"Lists",get:r=>r.n,t:"n"},
+    bench:{label:"29 Sep close",get:r=>S.bench?.prices?.[r.k],t:"n"},
+    cur:{label:"Current",get:r=>curQ()?.prices?.[r.k],t:"n"},
+    pct:{label:"Change",get:r=>r.p,t:"n",first:"asc"},
+    day:{label:"Trend (today's move)",get:r=>dayChg(r.k),t:"n",first:"asc"},
+  };
+  function sortRows(rows){
+    const c=ui.col&&COLS[ui.col]; if(!c) return rows;
+    const d=ui.dir==="asc"?1:-1;
+    return rows.slice().sort((a,b)=>{const x=c.get(a),y=c.get(b);
+      const xn=x==null||x==="", yn=y==null||y==="";
+      if(xn&&yn) return 0; if(xn) return 1; if(yn) return -1;
+      const v=c.t==="s"?String(x).localeCompare(String(y)):x-y;
+      return v*d || a.s.symbol.localeCompare(b.s.symbol);});
+  }
+  function th(label,key,cls,title){
+    const on=ui.col===key, arrow=on?(ui.dir==="asc"?"▲":"▼"):"↕";
+    const as=on?` aria-sort="${ui.dir==="asc"?"ascending":"descending"}"`:"";
+    return `<th class="${cls||""}"${as}><button type="button" class="sort" data-col="${key}" title="${esc(title||("Sort by "+label.toLowerCase()))}">${label}<span class="ar" aria-hidden="true">${arrow}</span></button></th>`;
+  }
+  function onSortClick(key){
+    const c=COLS[key]; if(!c) return;
+    const first=c.first||(c.t==="s"?"asc":"desc");
+    if(ui.col!==key){ui.col=key;ui.dir=first}
+    else if(ui.dir===first){ui.dir=first==="asc"?"desc":"asc"}
+    else {ui.col=null}
+    save(); render();
+    const again=document.querySelector(`button.sort[data-col="${key}"]`); if(again) again.focus({preventScroll:true});
+  }
+  function renderSortHint(){
+    const el=$("sortHint"); const c=ui.col&&COLS[ui.col]; el.classList.toggle("idle",!c);
+    el.innerHTML=c?`Sorted by <b>${esc(c.label)} ${ui.dir==="asc"?"▲":"▼"}</b><button type="button" id="clearSort">Clear sort</button>`:`Tap any column heading to sort`;
+  }
+
+  function render(){
+    renderSortHint();
+    const U=S.uni;
+    if(!U){return}
+    const stocks=U.stocks||{}, cats=U.categories||[];
+    const priced=Object.keys(stocks).filter(k=>pct(k)!=null);
+    const changes=priced.map(k=>[k,pct(k)]).sort((a,b)=>a[1]-b[1]);
+    const below=changes.filter(x=>x[1]<=THR);
+    const med=changes.length?(()=>{const v=changes.map(x=>x[1]),m=Math.floor(v.length/2);return v.length%2?v[m]:(v[m-1]+v[m])/2})():null;
+    const best=changes[changes.length-1], worst=changes[0];
+    const sym=k=>stocks[k]?.symbol||k;
+
+    // header
+    const L=S.latest, Q=curQ();
+    const fmtWhen=iso=>new Date(iso).toLocaleString("en-US",{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
+    if(Q&&Q===S.live){ $("refreshed").innerHTML=`Current prices <b>live, ${esc(fmtWhen(Q.asOf))}</b>${L?` · last daily close ${esc(new Date(L.marketDate+"T12:00:00Z").toLocaleDateString("en-US",{month:"short",day:"numeric",timeZone:"UTC"}))}`:""}`; }
+    else $("refreshed").innerHTML = L ? `Current prices <b>close, ${esc(new Date(L.marketDate+"T12:00:00Z").toLocaleDateString("en-US",{weekday:"short",day:"numeric",month:"short",year:"numeric",timeZone:"UTC"}))}</b>${S.main?.lastRefresh?` · refreshed ${esc(new Date(S.main.lastRefresh).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}))}`:""}` : "Waiting for prices";
+
+    $("tiles").innerHTML=[
+      ["Tracked",`${priced.length}`,`${Object.keys(stocks).length} names across ${cats.length} lists`],
+      ["At or below −5%",`<span class="${below.length?"down":""}">${below.length}</span>`,below.length?"see alert line below":"none have crossed"],
+      ["Median change",`<span class="${cls(med)}">${fmtPct(med)}</span>`,"vs 29 Sep close"],
+      ["Best",best?`<span class="${cls(best[1])}">${fmtPct(best[1])}</span>`:"—",best?sym(best[0])+" · "+(stocks[best[0]].name||""):""],
+      ["Worst",worst?`<span class="${cls(worst[1])}">${fmtPct(worst[1])}</span>`:"—",worst?sym(worst[0])+" · "+(stocks[worst[0]].name||""):""],
+    ].map(([l,v,s])=>`<div class="tile"><span class="eyebrow">${l}</span><span class="v">${v}</span><span class="s" title="${esc(s)}">${esc(s)}</span></div>`).join("");
+
+    // alert line
+    const newly=new Set(S.alerts?.lastNew||[]);
+    const line=$("line"); line.classList.toggle("hot",below.length>0);
+    line.innerHTML = below.length
+      ? `<h2>${below.length} ${below.length===1?"stock is":"stocks are"} 5% or more below the 29 Sep close</h2>
+         <div class="chips">${below.map(([k,p])=>`<span class="chip"><b>${esc(sym(k))}</b>${fmtPct(p)}${newly.has(k)?'<span class="new">NEW</span>':""}</span>`).join("")}</div>
+         <p>“New” marks stocks that crossed the line on the latest refresh; the daily email flags them at the top.</p>`
+      : `<h2>Nothing below the −5% line</h2><p>Every priced stock is within 5% of its 29 Sep close, or above it. When one closes 5% or more lower, it shows here and leads the daily email.</p>`;
+
+    // categories
+    // sector filter chips (Sectors tab only), alphabetical
+    const byName=(a,b)=>a.name.localeCompare(b.name);
+    const sectorCats=cats.filter(c=>c.family==="Sectors").slice().sort(byName);
+    const known=new Set(sectorCats.map(c=>c.name));
+    ui.secs=ui.secs.filter(n=>known.has(n));
+    const secEl=$("secs"); secEl.hidden=ui.fam!=="Sectors";
+    if(ui.fam==="Sectors"){
+      secEl.innerHTML=`<span class="lab">Sector</span><button type="button" class="clear" data-s="" aria-pressed="${!ui.secs.length}">All sectors</button>`+
+        sectorCats.map(c=>`<button type="button" data-s="${esc(c.name)}" aria-pressed="${ui.secs.includes(c.name)}">${esc(c.name)}<span class="n">${c.items.length}</span></button>`).join("");
+    }
+
+    const q=ui.q.trim().toLowerCase();
+    $("cons").hidden=ui.fam!=="Consensus";
+    if(ui.fam==="Consensus"){ $("cats").innerHTML=renderConsensus(stocks,cats,q); return; }
+    if(ui.fam==="My Favorites"){ $("cats").innerHTML=renderFavorites(stocks,cats,q); return; }
+    let html="";
+    const shown=ui.fam==="Sectors"
+      ? sectorCats.filter(c=>!ui.secs.length||ui.secs.includes(c.name))
+      : cats.filter(c=>c.family===ui.fam);
+    for(const c of shown){
+      let rows=c.items.map((k,i)=>({k,i,s:stocks[k]||{symbol:k},p:pct(k)}));
+      if(q) rows=rows.filter(r=>(r.s.symbol+" "+(r.s.name||"")+" "+r.k).toLowerCase().includes(q));
+      if(ui.only) rows=rows.filter(r=>r.p!=null&&r.p<=THR);
+      if(!rows.length) continue;
+      rows=sortRows(rows);
+      const all=c.items.map(pct).filter(v=>v!=null), avg=all.length?all.reduce((a,b)=>a+b,0)/all.length:null;
+      const nb=all.filter(v=>v<=THR).length;
+      html+=`<section class="cat" aria-label="${esc(c.name)}"><header><div><div class="fam">${esc(c.family)}</div><h3>${esc(c.name)}</h3></div>
+        <div class="agg">avg <span class="num ${cls(avg)}">${fmtPct(avg)}</span> · ${c.items.length} names${nb?` · <span class="down">${nb} below line</span>`:""}</div></header>
+        <div class="tbl"><table><thead><tr>${th("Ticker","sym","l")}${th("Company","name","l co")}${th("29 Sep close","bench")}${th("Current","cur")}${th("Change","pct","","Sort by change since 29 Sep")}${th("Trend","day","spk","Sort by today's move")}</tr></thead><tbody>
+        ${rows.map(r=>{
+          const s=r.s, b=S.bench?.prices?.[r.k], cu=curQ()?.prices?.[r.k];
+          const ccy=s.currency&&s.currency!=="USD"?`<span class="cur">${esc(s.currency)}</span>`:"";
+          const cn=`<span class="cn">${esc(s.name||"")}${s.note?`<span class="note">${esc(s.note)}</span>`:""}</span>`;
+          if(s.status!=="ok") return `<tr class="muted"><td class="l tk">${esc(s.symbol)}${cn}</td><td class="l co">${esc(s.name||"")}<span class="note">${esc(s.note||"")}</span></td><td colspan="4"><span class="pill">${s.status==="private"?"private":"no quote"}</span></td></tr>`;
+          return `<tr class="${r.p!=null&&r.p<=THR?"alert":""}"><td class="l tk">${esc(s.symbol)}${cn}</td><td class="l co" title="${esc(s.name)}">${esc(s.name)}${s.note?`<span class="note">${esc(s.note)}</span>`:""}</td>
+            <td class="num">${fmtP(b)}${ccy}</td><td class="num">${fmtP(cu)}${ccy}</td>
+            <td><span class="chg"><span class="p num ${cls(r.p)}">${fmtPct(r.p)}</span>${bar(r.p)}</span></td><td class="spk">${spark(r.k)}</td></tr>`;
+        }).join("")}</tbody></table></div></section>`;
+    }
+    $("cats").innerHTML = html || `<div class="empty">No stocks match these filters.</div>`;
+  }
+
+  // ---------- Consensus tab: Claude + GPT pick lists combined ----------
+  const TYPES=["Overall","Best Tech","Safest Bets","Extreme Profits"];
+  const TYPE_SHORT={"Overall":"Overall","Best Tech":"Best tech","Safest Bets":"Safest","Extreme Profits":"Extreme"};
+  const avgOf=a=>{const v=a.filter(x=>x!=null);return v.length?v.reduce((s,x)=>s+x,0)/v.length:null};
+  const medOf=a=>{const v=a.filter(x=>x!=null).sort((x,y)=>x-y);if(!v.length)return null;const m=Math.floor(v.length/2);return v.length%2?v[m]:(v[m-1]+v[m])/2};
+  const heat=p=>{if(p==null)return"";const i=Math.round(Math.min(1,Math.abs(p)/10)*45+6);return `background:color-mix(in srgb, var(${p<0?"--down":"--up"}) ${i}%, var(--panel))`};
+
+  function consensusData(stocks,cats){
+    const picks=cats.filter(c=>c.family==="Claude picks"||c.family==="GPT picks");
+    const typeOf=n=>TYPES.find(t=>n.toLowerCase().includes(t.toLowerCase()));
+    const slots=[];
+    for(const m of ["Claude","GPT"]) for(const t of TYPES){
+      slots.push({m,t,c:picks.find(c=>c.family===m+" picks"&&typeOf(c.name)===t)||null});
+    }
+    const secOf={};
+    cats.filter(c=>c.family==="Sectors").forEach(c=>c.items.forEach(k=>{(secOf[k]=secOf[k]||[]).push(c.name)}));
+    const map={};
+    slots.forEach((sl,i)=>{ if(!sl.c) return; sl.c.items.forEach(k=>{ const r=map[k]||(map[k]={k,hits:slots.map(()=>false)}); r.hits[i]=true; }); });
+    const rows=Object.values(map).map(r=>{
+      const cN=r.hits.slice(0,4).filter(Boolean).length, gN=r.hits.slice(4).filter(Boolean).length;
+      return {...r,n:cN+gN,cN,gN,who:cN&&gN?"both":cN?"claude":"gpt",p:pct(r.k),s:stocks[r.k]||{symbol:r.k},secs:(secOf[r.k]||[]).slice().sort()};
+    });
+    rows.sort((a,b)=>b.n-a.n||a.s.symbol.localeCompare(b.s.symbol));
+    let prev=null,rank=0; rows.forEach((r,i)=>{ if(r.n!==prev){rank=i+1;prev=r.n} r.rank=rank; });
+    return {slots,rows,max:slots.filter(s=>s.c).length};
+  }
+
+  function stripChart(rows,max){
+    const pts=rows.filter(r=>r.p!=null);
+    if(!pts.length) return `<p class="sub">The chart fills in once prices load.</p>`;
+    const W=360,H=210,ml=38,mr=10,mt=12,mb=30;
+    const vals=pts.map(r=>r.p);
+    let lo=Math.min(-10,...vals), hi=Math.max(10,...vals);
+    lo=Math.floor(lo/5)*5; hi=Math.ceil(hi/5)*5;
+    const X=n=>ml+((n-1)/Math.max(1,max-1))*(W-ml-mr-20)+10;
+    const Y=v=>mt+(hi-v)/(hi-lo)*(H-mt-mb);
+    let g="";
+    for(let t=lo;t<=hi;t+=5){
+      const y=Y(t).toFixed(1);
+      g+=`<line x1="${ml}" x2="${W-mr}" y1="${y}" y2="${y}" stroke="var(--rule-soft)"/>`+
+         `<text x="${ml-6}" y="${(+y+3).toFixed(1)}" text-anchor="end">${t>0?"+":""}${t}%</text>`;
+    }
+    g+=`<line x1="${ml}" x2="${W-mr}" y1="${Y(0).toFixed(1)}" y2="${Y(0).toFixed(1)}" stroke="var(--muted)"/>`;
+    g+=`<line x1="${ml}" x2="${W-mr}" y1="${Y(THR).toFixed(1)}" y2="${Y(THR).toFixed(1)}" stroke="var(--down)" stroke-dasharray="4 3"/>`+
+       `<text x="${W-mr}" y="${(Y(THR)+12).toFixed(1)}" text-anchor="end" style="fill:var(--down)">−5% alert line</text>`;
+    for(let n=1;n<=max;n++) g+=`<text x="${X(n).toFixed(1)}" y="${H-12}" text-anchor="middle">${n}</text>`;
+    g+=`<text x="${((ml+W-mr)/2).toFixed(1)}" y="${H-1}" text-anchor="middle">number of pick lists (of ${max})</text>`;
+    const byN={}, labels=[]; pts.forEach(r=>(byN[r.n]=byN[r.n]||[]).push(r));
+    for(const [n,arr] of Object.entries(byN)){
+      arr.sort((a,b)=>a.p-b.p);
+      arr.forEach((r,i)=>{
+        const off=arr.length>1?((i%3)-1)*7:0;
+        const cx=(X(+n)+off).toFixed(1), cy=Y(r.p).toFixed(1);
+        const c=r.p<=THR?"var(--down)":r.p<0?"color-mix(in srgb, var(--down) 55%, var(--muted))":"var(--up)";
+        g+=`<circle cx="${cx}" cy="${cy}" r="4.5" fill="${c}" fill-opacity=".85" stroke="var(--panel)" stroke-width="1"><title>${esc(r.s.symbol)} · ${r.n} lists · ${fmtPct(r.p)}</title></circle>`;
+        if(+n>=5) labels.push({x:+cx+7,y:+cy+3,t:r.s.symbol});
+      });
+    }
+    labels.sort((a,b)=>a.y-b.y); const placed=[];
+    for(const l of labels){ for(const q of placed){ if(Math.abs(q.x-l.x)<34&&l.y-q.y<11) l.y=q.y+11; } placed.push(l);
+      g+=`<text class="lbl" x="${l.x.toFixed(1)}" y="${l.y.toFixed(1)}">${esc(l.t)}</text>`; }
+    return `<svg class="strip" viewBox="0 0 ${W} ${H}" role="img" aria-label="Price change since 29 Sep by number of pick lists">${g}</svg>`;
+  }
+
+  function renderConsensus(stocks,cats,q){
+    const {slots,rows,max}=consensusData(stocks,cats);
+    if(!rows.length) return `<div class="empty full">No Claude or GPT pick lists found.</div>`;
+    const W={all:"All picks",both:"Both models",claude:"Claude only",gpt:"GPT only"};
+    if(!W[ui.who]) ui.who="all";
+    const cnt=w=>w==="all"?rows.length:rows.filter(r=>r.who===w).length;
+    $("cons").innerHTML=`<span class="lab">Picked by</span>`+Object.entries(W).map(([w,l])=>`<button type="button" data-w="${w}" aria-pressed="${ui.who===w}">${l}<span class="n">${cnt(w)}</span></button>`).join("");
+
+    // tiers
+    const tiers=[["5+ lists",r=>r.n>=5],["3–4 lists",r=>r.n>=3&&r.n<=4],["2 lists",r=>r.n===2],["1 list",r=>r.n===1]];
+    const tierRows=tiers.map(([l,f])=>{const a=rows.filter(f);return {l,a,avg:avgOf(a.map(r=>r.p)),below:a.filter(r=>r.p!=null&&r.p<=THR).length}}).filter(t=>t.a.length);
+    const whoRows=[["both","Both models","b"],["claude","Claude only","c"],["gpt","GPT only","g"]].map(([w,l,sw])=>{const a=rows.filter(r=>r.who===w);return {l,sw,a,avg:avgOf(a.map(r=>r.p)),below:a.filter(r=>r.p!=null&&r.p<=THR).length}}).filter(t=>t.a.length);
+    const top=tierRows[0], bottom=tierRows[tierRows.length-1];
+    let take="";
+    if(top&&bottom&&top!==bottom&&top.avg!=null&&bottom.avg!=null){
+      const d=top.avg-bottom.avg;
+      take=Math.abs(d)<0.25?`So far the most-picked names are moving in line with the single-list names.`
+        :`So far the most-picked names (${top.l}) are ${d>0?"ahead of":"behind"} single-list names by ${Math.abs(d).toFixed(2)} points.`;
+    }
+    const tierTable=`<table><thead><tr><th class="l">Group</th><th>Names</th><th>Avg change</th><th>At −5%</th></tr></thead><tbody>
+      ${tierRows.map(t=>`<tr><td class="l">${t.l}<small style="display:block;color:var(--muted);font-size:11.5px">${t.a.slice(0,6).map(r=>esc(r.s.symbol)).join(", ")}${t.a.length>6?"…":""}</small></td><td class="num">${t.a.length}</td><td class="num ${cls(t.avg)}">${fmtPct(t.avg)}</td><td class="num ${t.below?"down":""}">${t.below}</td></tr>`).join("")}
+      ${whoRows.map((t,i)=>`<tr${i===0?' style="border-top:2px solid var(--rule)"':""}><td class="l"><span class="who"><span class="sw ${t.sw}"></span>${t.l}</span></td><td class="num">${t.a.length}</td><td class="num ${cls(t.avg)}">${fmtPct(t.avg)}</td><td class="num ${t.below?"down":""}">${t.below}</td></tr>`).join("")}
+    </tbody></table>`;
+
+    // model × list type heat grid
+    const cell=(m,t)=>{const sl=slots.find(s=>s.m===m&&s.t===t); if(!sl||!sl.c) return `<td class="h">—</td>`;
+      const ps=sl.c.items.map(pct); const a=avgOf(ps); const nb=ps.filter(p=>p!=null&&p<=THR).length;
+      return `<td class="h" style="${heat(a)}" title="${esc(sl.c.name)}">${fmtPct(a)}<small>${sl.c.items.length} names${nb?` · ${nb} at −5%`:""}</small></td>`};
+    const typeAvg=TYPES.map(t=>({t,a:avgOf(rows.filter(r=>r.hits[TYPES.indexOf(t)]||r.hits[4+TYPES.indexOf(t)]).map(r=>r.p))})).filter(x=>x.a!=null).sort((x,y)=>y.a-x.a);
+    const heatTable=`<table class="heat"><thead><tr><th class="l"></th>${TYPES.map(t=>`<th>${TYPE_SHORT[t]}</th>`).join("")}</tr></thead><tbody>
+      ${["Claude","GPT"].map(m=>`<tr><td class="l"><span class="who"><span class="sw ${m==="Claude"?"c":"g"}"></span>${m}</span></td>${TYPES.map(t=>cell(m,t)).join("")}</tr>`).join("")}
+    </tbody></table>`;
+    const heatTake=typeAvg.length>1?`Strongest list type so far: <b>${TYPE_SHORT[typeAvg[0].t]}</b> (${fmtPct(typeAvg[0].a)}). Weakest: <b>${TYPE_SHORT[typeAvg[typeAvg.length-1].t]}</b> (${fmtPct(typeAvg[typeAvg.length-1].a)}).`:"";
+
+    // main table rows
+    let list=rows.slice();
+    if(ui.who!=="all") list=list.filter(r=>r.who===ui.who);
+    if(q) list=list.filter(r=>(r.s.symbol+" "+(r.s.name||"")+" "+r.k+" "+r.secs.join(" ")).toLowerCase().includes(q));
+    if(ui.only) list=list.filter(r=>r.p!=null&&r.p<=THR);
+    list=sortRows(list);
+
+    const mx=r=>`<span class="mx">${r.hits.map((h,i)=>`<span class="d ${h?(i<4?"c":"g"):""}" title="${slots[i].m} · ${TYPE_SHORT[slots[i].t]}${h?"":" (not picked)"}"></span>${i===3?'<span class="gap"></span>':""}`).join("")}</span>`;
+    const body=list.map(r=>{
+      const s=r.s,b=S.bench?.prices?.[r.k],cu=curQ()?.prices?.[r.k];
+      return `<tr class="${r.p!=null&&r.p<=THR?"alert":""}"><td class="rk">#${r.rank}</td>
+        <td class="l tk">${esc(s.symbol)}<span class="cn">${esc(s.name||"")}</span><span class="mxn">${mx(r)}</span></td>
+        <td class="l co">${esc(s.name||"")}${r.secs.length?`<span class="sec">${esc(r.secs.join(" · "))}</span>`:""}</td>
+        <td class="l mxc">${mx(r)}</td>
+        <td class="mn"><b>${r.n}</b><span class="of">/${max}</span><small>C${r.cN} · G${r.gN}</small></td>
+        <td class="num bmc">${fmtP(b)}</td><td class="num">${fmtP(cu)}<span class="bm">from ${fmtP(b)}</span></td>
+        <td><span class="chg"><span class="p num ${cls(r.p)}">${fmtPct(r.p)}</span>${bar(r.p)}</span></td>
+        <td class="spk">${spark(r.k)}</td></tr>`}).join("");
+
+    return `<div class="full">
+      <div class="insights">
+        <section class="card"><h3>Does agreement pay off?</h3>
+          <p class="sub">Average change since the 29 Sep close, grouped by how many of the ${max} pick lists name the stock, and by which model picked it.</p>
+          <div class="tbl">${tierTable}</div>${take?`<p class="take">${take}</p>`:""}</section>
+        <section class="card"><h3>Which list type is working?</h3>
+          <p class="sub">Average change of each Claude and GPT top-10 list. Red cells are losing ground, green cells gaining; deeper color means a bigger move.</p>
+          <div class="tbl">${heatTable}</div>${heatTake?`<p class="take">${heatTake}</p>`:""}</section>
+        <section class="card"><h3>Consensus vs. performance</h3>
+          <p class="sub">Each dot is one pick. Right means more lists agree on it; below the dashed line means 5%+ under the 29 Sep close.</p>
+          ${stripChart(rows,max)}</section>
+      </div>
+      <section class="ctable" aria-label="All Claude and GPT picks">
+        <header><div><div class="fam">Claude + GPT picks</div><h3>${rows.length} unique picks, most-mentioned first</h3></div>
+          <div class="legend"><span class="who"><span class="sw c"></span>Claude</span><span class="who"><span class="sw g"></span>GPT</span><span>squares, left to right: Overall · Best tech · Safest · Extreme profits</span></div></header>
+        <div class="tbl"><table><thead><tr>${th("Rank","rank","rk l","Sort by consensus rank")}${th("Ticker","sym","l")}${th("Company · sector","name","l co","Sort by company")}${th("Picked in","mx","l mxc","Sort by Claude lists, then GPT lists")}${th("Lists","n","","Sort by number of lists")}${th("29 Sep close","bench","bmc")}${th("Current","cur")}${th("Change","pct","","Sort by change since 29 Sep")}${th("Trend","day","spk","Sort by today's move")}</tr></thead>
+        <tbody>${body||`<tr><td colspan="9" class="l" style="padding:24px 16px;color:var(--muted)">No picks match these filters.</td></tr>`}</tbody></table></div>
+      </section>
+    </div>`;
+  }
+
+
+
+  // ---------- My Favorites tab ----------
+  function renderFavorites(stocks,cats,q){
+    const fc=cats.find(c=>c.family==="My Favorites");
+    if(!fc||!fc.items.length) return `<div class="empty full">No favorites saved yet.</div>`;
+    const {slots,rows:crow,max}=consensusData(stocks,cats);
+    const cm=Object.fromEntries(crow.map(r=>[r.k,r]));
+    const secOf={}; cats.filter(c=>c.family==="Sectors").forEach(c=>c.items.forEach(k=>{(secOf[k]=secOf[k]||[]).push(c.name)}));
+    const all=fc.items.map((k,i)=>{const c=cm[k];return {k,i,s:stocks[k]||{symbol:k},p:pct(k),secs:(secOf[k]||[]).slice().sort(),
+      hits:c?c.hits:slots.map(()=>false),n:c?c.n:0,cN:c?c.cN:0,gN:c?c.gN:0}});
+    const ps=all.map(r=>r.p).filter(v=>v!=null);
+    const avg=avgOf(ps), nb=ps.filter(v=>v<=THR).length, up=ps.filter(v=>v>0.005).length, dn=ps.filter(v=>v<-0.005).length;
+    const srt=all.filter(r=>r.p!=null).sort((a,b)=>a.p-b.p); const worst=srt[0], best=srt[srt.length-1];
+    let list=all.slice();
+    if(q) list=list.filter(r=>(r.s.symbol+" "+(r.s.name||"")+" "+r.k+" "+r.secs.join(" ")).toLowerCase().includes(q));
+    if(ui.only) list=list.filter(r=>r.p!=null&&r.p<=THR);
+    list=sortRows(list);
+    const mx=r=>`<span class="mx">${r.hits.map((h,i)=>`<span class="d ${h?(i<4?"c":"g"):""}" title="${slots[i].m} · ${TYPE_SHORT[slots[i].t]}${h?"":" (not picked)"}"></span>${i===3?'<span class="gap"></span>':""}`).join("")}</span>`;
+    const body=list.map(r=>{
+      const s=r.s,b=S.bench?.prices?.[r.k],cu=curQ()?.prices?.[r.k];
+      return `<tr class="${r.p!=null&&r.p<=THR?"alert":""}">
+        <td class="l tk">${esc(s.symbol)}<span class="cn">${esc(s.name||"")}</span></td>
+        <td class="l co">${esc(s.name||"")}${r.secs.length?`<span class="sec">${esc(r.secs.join(" · "))}</span>`:""}</td>
+        <td class="mn" title="Number of Claude and GPT top-10 lists that include this stock"><b>${r.n}</b><span class="of">/${max}</span><small>C${r.cN} · G${r.gN}</small></td>
+        <td class="num bmc">${fmtP(b)}</td><td class="num">${fmtP(cu)}<span class="bm">from ${fmtP(b)}</span></td>
+        <td><span class="chg"><span class="p num ${cls(r.p)}">${fmtPct(r.p)}</span>${bar(r.p)}</span></td>
+        <td class="spk">${spark(r.k)}</td></tr>`}).join("");
+    return `<div class="full"><section class="ctable" aria-label="My Favorites">
+      <header><div><div class="fam">My Favorites</div><h3>${all.length} stocks you're watching</h3></div>
+        <div class="agg" style="font-size:12.5px;color:var(--muted);text-align:right">avg <span class="num ${cls(avg)}">${fmtPct(avg)}</span> · ${up} up · ${dn} down${nb?` · <span class="down">${nb} below line</span>`:""}${best&&worst?`<br>best <b class="num">${esc(best.s.symbol)} ${fmtPct(best.p)}</b> · worst <b class="num">${esc(worst.s.symbol)} ${fmtPct(worst.p)}</b>`:""}</div></header>
+      <div class="tbl"><table><thead><tr>${th("Ticker","sym","l")}${th("Company · sector","name","l co","Sort by company")}${th("Lists","n","","Sort by number of Claude and GPT lists that include it")}${th("29 Sep close","bench","bmc")}${th("Current","cur")}${th("Change","pct","","Sort by change since 29 Sep")}${th("Trend","day","spk","Sort by today's move")}</tr></thead>
+      <tbody>${body||`<tr><td colspan="7" class="l" style="padding:24px 16px;color:var(--muted)">No favorites match these filters.</td></tr>`}</tbody></table></div>
+    </section></div>`;
+  }
+
+
+  // ---------- Refresh button: asks the server to fetch live prices ----------
+  let pending=null, pendTimer=null, fastPoll=null, refreshState=null;
+  function setMsg(t,cls){const m=$("refreshMsg"); m.textContent=t; m.className=cls||"";}
+  function setBusy(b){const btn=$("refreshBtn"); btn.disabled=b; btn.innerHTML=b?'<span class="spin" aria-hidden="true"></span>Refreshing…':"Refresh prices now";}
+  function stopPending(){pending=null; clearInterval(pendTimer); clearInterval(fastPoll); setBusy(false);}
+  function tick(){
+    if(!pending) return;
+    const secs=Math.round((Date.now()-pending.at)/1000);
+    if(S.live&&S.live.asOf&&S.live.asOf!==pending.base&&Date.parse(S.live.asOf)>=pending.at-60000){
+      stopPending();
+      setMsg(`Live prices loaded (${new Date(S.live.asOf).toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"})}). Changes below are recalculated against the 29 Sep close.`,"ok"); return;
+    }
+    const R=refreshState;
+    if(R&&!R.running&&R.lastError&&R.finishedAt&&Date.parse(R.finishedAt)>=pending.at-2000){
+      stopPending(); setMsg("The refresh failed: "+R.lastError+". Try again in a few minutes.","err"); return;
+    }
+    if(secs>300){ stopPending();
+      setMsg("No prices came back after 5 minutes. The refresh may have failed; try again in a few minutes.","err"); return; }
+    setMsg(`Fetching current prices… ${Math.floor(secs/60)}:${String(secs%60).padStart(2,"0")} elapsed. The page updates by itself.`);
+  }
+  async function doRefresh(){
+    if(pending) return;
+    setBusy(true); setMsg("Starting the refresh…");
+    try{
+      const r=await fetch("api/refresh",{method:"POST"});
+      const j=await r.json().catch(()=>({}));
+      if(!r.ok&&r.status!==409) throw new Error(j.error||("HTTP "+r.status));
+      pending={at:Date.now(),base:S.live?.asOf||""};
+      clearInterval(pendTimer); pendTimer=setInterval(tick,1000);
+      clearInterval(fastPoll); fastPoll=setInterval(load,3000); tick();
+    }catch(e){ setBusy(false); setMsg("Refresh couldn't start ("+e.message+"). Try again in a minute.","err"); }
+  }
+  $("refreshBtn").addEventListener("click",doRefresh);
+
+  // controls
+  function syncControls(){
+    document.querySelectorAll("#famSeg button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.f===ui.fam)));
+    $("q").value=ui.q; $("onlyAlerts").checked=ui.only;
+  }
+  function save(){try{localStorage.setItem("ftw-ui",JSON.stringify({fam:ui.fam,col:ui.col,dir:ui.dir,only:ui.only,secs:ui.secs,who:ui.who}))}catch(e){}}
+  $("secs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const s=b.dataset.s;
+    if(!s) ui.secs=[]; else ui.secs=ui.secs.includes(s)?ui.secs.filter(x=>x!==s):[...ui.secs,s];
+    save();render();const again=[...$("secs").querySelectorAll("button")].find(x=>x.dataset.s===s);if(again)again.focus()});
+  $("cons").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;ui.who=b.dataset.w;save();render();const again=[...$("cons").querySelectorAll("button")].find(x=>x.dataset.w===ui.who);if(again)again.focus()});
+  $("famSeg").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;ui.fam=b.dataset.f;syncControls();save();render()});
+  $("q").addEventListener("input",e=>{ui.q=e.target.value;render()});
+  $("cats").addEventListener("click",e=>{const b=e.target.closest("button.sort");if(b)onSortClick(b.dataset.col)});
+  $("sortHint").addEventListener("click",e=>{if(e.target.closest("#clearSort")){ui.col=null;save();render()}});
+  $("onlyAlerts").addEventListener("change",e=>{ui.only=e.target.checked;save();render()});
+  syncControls();
+
+  // data
+  // Polls the server for the same documents the claude.ai database used to push.
+  let lastStamp=null;
+  async function load(){
+    try{
+      const r=await fetch("api/state",{cache:"no-store"});
+      if(!r.ok) throw new Error("HTTP "+r.status);
+      const d=await r.json();
+      refreshState=d.refresh||null;
+      if(d.main?.emailTo) $("emailTo").textContent=d.main.emailTo;
+      if(d.stamp!==lastStamp){
+        lastStamp=d.stamp;
+        S.main=d.main; S.uni=d.uni; S.bench=d.bench; S.latest=d.latest; S.live=d.live; S.alerts=d.alerts; S.hist=d.hist||{};
+        if(!S.uni){$("empty").textContent="No watchlist loaded yet. Add the watchlist CSV on the server (see README).";$("refreshed").textContent="Waiting for prices";}
+        render();
+      }
+      if(pending) tick();
+    }catch(e){
+      console.warn("state",e);
+      if(!S.uni){$("empty").textContent="Couldn't reach the watchlist server.";$("refreshed").textContent="Data unavailable";}
+    }
+  }
+  load();
+  setInterval(load,60000);
+  document.addEventListener("visibilitychange",()=>{if(!document.hidden) load()});
+})();
+</script>
+
+</body></html>
