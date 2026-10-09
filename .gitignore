@@ -1,6 +1,7 @@
 node_modules/
 # Secrets and live data: never committed
 .env
+.env.hostinger
 /data/
 claude-export.json
 hostinger/api/config.php

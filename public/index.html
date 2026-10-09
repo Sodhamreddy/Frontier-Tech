@@ -372,6 +372,45 @@ table.heat th{text-align:center;background:none;border:0}
   .pk{flex:none;width:auto;border:1px solid var(--rule)}
   .pk:first-child{margin:0;box-shadow:none}
 }
+/* ---------- mobile: bottom tab bar + "More" sheet ---------- */
+.tabbar,.sheet,.sheet-scrim{display:none}
+@media (max-width:760px){
+  .side .nav,.side-foot{display:none}
+  .side{justify-content:flex-start;gap:10px}
+  .brand .logo{width:30px;height:30px}
+  .top{gap:10px}
+  .top .grow{display:none}
+  .search{flex:1 1 100%;order:1}
+  .switch{order:2;margin-right:auto}
+  #addBtn{order:3;padding:8px 10px}
+  #addBtn span{display:none}
+  #refreshBtn{order:4}
+  .status{order:5}
+  .side .m-title{display:block;font-weight:700;font-size:15px;letter-spacing:-.01em}
+  .brand small{display:none}
+  body{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+  .toasts{bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:15;background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:blur(12px);border-top:1px solid var(--rule);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+  .tab{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;border-radius:10px;color:var(--muted);font:600 10.5px/1.1 var(--sans);position:relative;-webkit-tap-highlight-color:transparent;text-align:center}
+  .tab svg{width:22px;height:22px}
+  .tab .pip{position:absolute;top:0;left:calc(50% + 6px);min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:var(--down);color:#fff;font:700 9.5px/16px var(--mono);text-align:center}
+  .tab[aria-current="page"]{color:var(--accent)}
+  .tab[aria-current="page"] .ic-wrap{background:var(--accent-soft)}
+  .tab .ic-wrap{width:44px;height:28px;border-radius:999px;display:grid;place-items:center;transition:background .15s}
+  .tab:focus-visible{outline:2px solid var(--accent)}
+  .sheet-scrim{display:block;position:fixed;inset:0;z-index:16;background:rgba(10,14,21,.45);opacity:0;pointer-events:none;transition:opacity .2s}
+  .sheet-scrim.on{opacity:1;pointer-events:auto}
+  .sheet{display:block;position:fixed;left:0;right:0;bottom:0;z-index:17;background:var(--panel);border-radius:18px 18px 0 0;box-shadow:var(--shadow-lg);padding:8px 16px calc(84px + env(safe-area-inset-bottom,0px));transform:translateY(100%);transition:transform .25s ease}
+  .sheet.on{transform:none}
+  .sheet .grab{width:40px;height:4px;border-radius:999px;background:var(--rule);margin:4px auto 12px}
+  .sheet .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .sheet a,.sheet button{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px;border-radius:12px;background:var(--panel-2);border:1px solid var(--rule);font:600 12px var(--sans);color:var(--ink-2);text-align:center}
+  .sheet a[aria-current="page"]{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+  .sheet a svg,.sheet button svg{width:22px;height:22px}
+  .sheet a:focus-visible,.sheet button:focus-visible{outline:2px solid var(--accent)}
+  @media (prefers-reduced-motion:reduce){.sheet,.sheet-scrim{transition:none}}
+}
+.m-title{display:none}
 @media (max-width:640px){
   .brand b{display:none}
   .stk .c{max-width:140px}
@@ -392,6 +431,7 @@ table.heat th{text-align:center;background:none;border:0}
       <div class="logo" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
       <div><b>Frontier Tech</b><small>Watchlist · price watch</small></div>
     </div>
+    <span class="m-title">Frontier Tech Watchlist</span>
     <nav class="nav" id="nav" aria-label="Views"></nav>
     <div class="side-foot">
       <div class="row"><span>Benchmark</span><b id="sfBench">—</b></div>
@@ -411,7 +451,7 @@ table.heat th{text-align:center;background:none;border:0}
       <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
         <input type="search" id="q" placeholder="Search ticker, company, sector" aria-label="Search ticker, company or sector"></label>
       <label class="switch"><input type="checkbox" class="red" id="onlyAlerts"> <span id="onlyLbl">Below line only</span></label>
-      <button type="button" class="btn ghost" id="addBtn" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Add stock</span></button>
+      <button type="button" class="btn ghost" id="addBtn" aria-label="Add stock" title="Add stock" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Add stock</span></button>
       <button type="button" class="btn" id="refreshBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 4v5h-5"/></svg><span>Refresh</span></button>
       <div class="status" id="status" aria-live="polite"><span class="dot" id="statusDot"></span><span id="statusTxt">Loading prices…</span><span id="autoTxt"></span></div>
     </header>
@@ -420,6 +460,9 @@ table.heat th{text-align:center;background:none;border:0}
   </div>
 </div>
 
+<nav class="tabbar" id="tabbar" aria-label="Main"></nav>
+<div class="sheet-scrim" id="sheetScrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="More views"></div>
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer" aria-label="Stock details" aria-hidden="true"></aside>
 <div class="scrim scrim2" id="scrim2"></div>
@@ -1068,7 +1111,19 @@ table.heat th{text-align:center;background:none;border:0}
       h+=`<a href="#${v.id}" data-v="${v.id}"${ui.view===v.id?' aria-current="page"':""}>${svgI(v.id)}<span>${v.label}</span>${n!=null&&S.uni?`<span class="cnt${v.id==="alerts"&&n?" hot":""}">${n}</span>`:""}</a>`;
     }
     $("nav").innerHTML=h;
+    // Phone: four main tabs plus "More", which opens a sheet with the other views.
+    const MAIN=["overview","alerts","sectors","favorites"], LBL={favorites:"Favorites"};
+    const inMore=!MAIN.includes(ui.view);
+    $("tabbar").innerHTML=MAIN.map(id=>{const v=VIEWS.find(x=>x.id===id),n=id==="alerts"&&S.uni?counts.alerts:0;
+      return `<a class="tab" href="#${id}"${ui.view===id?' aria-current="page"':""}><span class="ic-wrap">${svgI(id)}</span>${LBL[id]||v.label}${n?`<span class="pip">${n>99?"99+":n}</span>`:""}</a>`}).join("")+
+      `<button type="button" class="tab" id="moreBtn" aria-haspopup="dialog"${inMore?' aria-current="page"':""}><span class="ic-wrap"><svg class="i" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></span>${inMore?esc(VIEWS.find(x=>x.id===ui.view).label.replace(" picks","").replace("Manage lists","Lists")):"More"}</button>`;
+    $("sheet").innerHTML=`<div class="grab"></div><div class="grid3">${VIEWS.filter(v=>!MAIN.includes(v.id)).map(v=>`<a href="#${v.id}"${ui.view===v.id?' aria-current="page"':""}>${svgI(v.id)}${v.label}</a>`).join("")}<button type="button" data-sheet="theme"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>Theme</button></div>`;
   }
+  const openSheet=on=>{$("sheet").classList.toggle("on",on); $("sheetScrim").classList.toggle("on",on); if(on) $("sheet").querySelector("a,button")?.focus();};
+  $("tabbar").addEventListener("click",e=>{ if(e.target.closest("#moreBtn")) openSheet(!$("sheet").classList.contains("on")); else openSheet(false); });
+  $("sheetScrim").addEventListener("click",()=>openSheet(false));
+  $("sheet").addEventListener("click",e=>{ if(e.target.closest("[data-sheet=theme]")){$("themeBtn").click();return} if(e.target.closest("a")) openSheet(false); });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&$("sheet").classList.contains("on")) openSheet(false); });
   function renderMeta(){
     const L=S.latest,Q=curQ();
     let t="Waiting for prices";
