@@ -439,6 +439,26 @@ table.heat th{text-align:center;background:none;border:0}
   .toasts{left:16px;right:16px;align-items:stretch}
 }
 
+/* ---------- delete: row button + confirmation dialog ---------- */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+th.act,td.act{width:44px;padding-left:4px!important;text-align:center}
+.rowdel{all:unset;cursor:pointer;width:30px;height:30px;display:inline-grid;place-items:center;border-radius:8px;color:var(--muted);opacity:.35;transition:opacity .12s,background-color .12s,color .12s}
+.rowdel svg{width:16px;height:16px}
+tr[data-k]:hover .rowdel,tr[data-k]:focus-within .rowdel{opacity:1}
+.rowdel:hover{background:var(--down-soft);color:var(--down);opacity:1}
+.rowdel:focus-visible{outline:2px solid var(--accent);opacity:1}
+@media (hover:none){.rowdel{opacity:.7}}
+.delhead{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--rule);border-radius:12px;background:var(--panel-2)}
+.delhead .av{width:38px;height:38px;font-size:11px}
+.delhead b{display:block;font-size:15px}
+.delhead small{display:block;color:var(--muted);font-size:12.5px}
+.delopts{display:flex;flex-direction:column;gap:8px}
+.delopt{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--rule);border-radius:12px;cursor:pointer}
+.delopt:has(input:checked){border-color:color-mix(in srgb,var(--down) 45%,var(--rule));background:var(--down-soft)}
+.delopt input{margin-top:3px;accent-color:var(--down)}
+.delopt b{display:block;font-size:13.5px}
+.delopt small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+
 /* ---------- clean look: Mulish, quieter colors, more air ---------- */
 body{font-size:14.5px;letter-spacing:-.003em;font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
 .num,.kpi .v,.badge,.stk .t,td,svg.chart text{font-variant-numeric:tabular-nums}
@@ -685,6 +705,7 @@ svg.chart text{font:12px var(--sans)} svg.chart text.v{font:700 11.5px var(--san
     day:{h:"Day",t:"n",first:"asc",cls:"hide-sm hide-md",get:r=>dayChg(r.k),cell:r=>{const d=dayChg(r.k);return `<span class="num ${cls(d)}">${fmtPct(d)}</span>`}},
     since:{h:"Below since",t:"s",get:r=>sinceOf(r.k)||"",cell:r=>{const s=sinceOf(r.k);return `<span class="num" style="color:var(--muted)">${s?dayLbl(s):"—"}</span>`}},
     trend:{h:"Trend",t:"n",cls:"hide-sm",get:r=>dayChg(r.k),cell:r=>spark(r.k)},
+    act:{h:"Actions",nosort:1,cls:"act",cell:r=>`<button type="button" class="rowdel" data-del="${esc(r.k)}" aria-label="Delete ${esc(r.s.symbol)}" title="Delete ${esc(r.s.symbol)}">${svgI("trash")}</button>`},
   };
   const colH=c=>typeof c.h==="function"?c.h():c.h;
   function sortRows(rows){
@@ -707,9 +728,19 @@ svg.chart text{font:12px var(--sans)} svg.chart text.v{font:700 11.5px var(--san
   }
   // Long tables show PAGE rows at a time; `key` remembers how far each table is expanded.
   const PAGE=15, limits={};
+  // The list a table shows, so its delete button can offer "remove from this list".
+  function listContext(){
+    const v=VIEWS.find(x=>x.id===ui.view);
+    if(v?.id==="sectors"&&ui.pick.sectors) return {family:"Sectors",name:ui.pick.sectors};
+    if(v?.fam&&ui.pick[v.id]) return {family:v.fam,name:ui.pick[v.id]};
+    if(v?.id==="favorites") return {family:"My Favorites",name:"My Favorites"};
+    return null;
+  }
   function table(rows,cols,empty,key){
     if(!rows.length) return `<div class="empty">${empty||"No stocks match these filters."}</div>`;
+    if(key&&canEdit()) cols=[...cols,"act"];
     const head=cols.map(k=>{const c=COLS[k],on=ui.col===k;
+      if(c.nosort) return `<th class="${c.cls||""}"><span class="sr">${esc(colH(c))}</span></th>`;
       return `<th class="${c.l?"l ":""}${c.cls||""}"${on?` aria-sort="${ui.dir==="asc"?"ascending":"descending"}"`:""}><button type="button" data-col="${k}">${esc(colH(c))}<span class="ar" aria-hidden="true">${on?(ui.dir==="asc"?"▲":"▼"):"↕"}</span></button></th>`}).join("");
     const sorted=sortRows(rows), lim=key?Math.max(PAGE,limits[key]||PAGE):sorted.length, shown=sorted.slice(0,lim);
     const body=shown.map(r=>`<tr data-k="${esc(r.k)}" class="${isBelow(r.p)?"al":""}" tabindex="0">${cols.map(k=>{const c=COLS[k];return `<td class="${c.l?"l ":""}${c.cls||""}">${c.cell(r)}</td>`}).join("")}</tr>`).join("");
@@ -909,6 +940,8 @@ svg.chart text{font:12px var(--sans)} svg.chart text.v{font:700 11.5px var(--san
   });
   $("dlg").addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.matches("input:not([type=checkbox])")){e.preventDefault();$("dlgOk")?.click()} });
   $("scrim2").addEventListener("click",()=>{const c=dlgState?.onCancel; closeDialog(); c&&c()});
+  // Delete dialog: the confirm button says what the chosen option will do.
+  $("dlg").addEventListener("change",e=>{ if(e.target.name==="delmode"&&$("dlgOk")) $("dlgOk").textContent=e.target.value==="all"?"Delete stock":"Remove"; });
 
   // ---------- editing actions ----------
   const listChecks=(sel,disabled)=>{
@@ -956,12 +989,26 @@ svg.chart text{font:12px var(--sans)} svg.chart text.v{font:700 11.5px var(--san
         setTimeout(()=>openDrawer(r.key),250);
       }});
   }
-  function removeStockDialog(k){
+  // Delete with confirmation. Inside a list (and when the stock is in others too) it offers
+  // "remove from this list" or "delete from the whole watchlist"; otherwise a full delete.
+  function removeStockDialog(k,ctx){
     const s=stocks()[k]; if(!s) return;
-    const n=cats().filter(c=>c.items.includes(k)).length;
-    dialog({icon:"trash",danger:true,title:`Remove ${esc(s.symbol)}?`,ok:"Remove stock",
-      body:`<p>${esc(s.name||s.symbol)} will be taken out of all ${n} list${n===1?"":"s"} and stop being tracked. Its price history stays on disk, so adding it back later restores its chart.</p>`,
-      onOk:async()=>{ await api("DELETE","api/stocks/"+encodeURIComponent(k)); closeDrawer(); await load(true); toast(`Removed ${esc(s.symbol)}`); }});
+    const lists=cats().filter(c=>c.items.includes(k)), n=lists.length;
+    const inCtx=ctx&&lists.some(c=>c.family===ctx.family&&c.name===ctx.name);
+    const choice=inCtx&&n>1;
+    const full=`<b>Delete from the whole watchlist</b><small>Removed from all ${n} list${n===1?"":"s"} and no longer tracked.</small>`;
+    dialog({icon:"trash",danger:true,title:`Delete ${esc(s.symbol)}?`,ok:choice?"Remove":"Delete stock",
+      body:`<div class="delhead">${avatar(k)}<div><b>${esc(s.symbol)}</b><small>${esc(s.name||"")} · in ${n} list${n===1?"":"s"}</small></div></div>`+
+        (choice?`<div class="delopts">
+          <label class="delopt"><input type="radio" name="delmode" value="list" checked><span><b>Remove from “${esc(ctx.name)}” only</b><small>Stays in its other ${n-1} list${n-1===1?"":"s"}: ${lists.filter(c=>!(c.family===ctx.family&&c.name===ctx.name)).map(c=>esc(c.name)).slice(0,4).join(", ")}${n-1>4?"…":""}</small></span></label>
+          <label class="delopt"><input type="radio" name="delmode" value="all"><span>${full}</span></label></div>`
+        :`<p>${inCtx?`This is its only list, so `:""}${esc(s.name||s.symbol)} will be removed from ${n===1?"its list":`all ${n} lists`} and stop being tracked.</p>`)+
+        `<p class="hint" style="margin:0;font-size:12.5px;color:var(--muted)">Price history stays on the server, so adding it back later restores its chart.</p>`,
+      onOk:async()=>{
+        const mode=choice?$("dlg").querySelector('input[name="delmode"]:checked').value:"all";
+        if(mode==="list"){ await api("POST","api/lists/membership",{key:k,family:ctx.family,name:ctx.name,on:false}); await load(true); toast(`Removed <b>${esc(s.symbol)}</b> from ${esc(ctx.name)}`); return; }
+        await api("DELETE","api/stocks/"+encodeURIComponent(k)); closeDrawer(); await load(true); toast(`Deleted <b>${esc(s.symbol)}</b> from the watchlist`);
+      }});
   }
 
   // ---------- views ----------
@@ -1148,7 +1195,7 @@ svg.chart text{font:12px var(--sans)} svg.chart text.v{font:700 11.5px var(--san
           <div><span>Below line since</span><b>${since?dayLbl(since):"—"}</b></div>
         </div>
         <div><p class="sec-title"><span>Lists</span><span style="text-transform:none;letter-spacing:0;font-weight:400">${ed?"Tick to add or remove":`In ${inCats.length}`}</span></p>${listChecks(cat=>cat.items.includes(k),!ed)}</div>
-        ${ed?`<div style="display:flex;justify-content:flex-end;border-top:1px solid var(--rule-soft);padding-top:14px"><button type="button" class="btn ghost sm" data-act="removeStock" style="color:var(--down)">${svgI("trash")}Remove from watchlist</button></div>`:""}
+        ${ed?`<div style="display:flex;justify-content:flex-end;border-top:1px solid var(--rule-soft);padding-top:14px"><button type="button" class="btn ghost sm" data-act="removeStock" style="color:var(--down)">${svgI("trash")}Delete stock</button></div>`:""}
       </div>`;
   }
   $("scrim").addEventListener("click",closeDrawer);
@@ -1232,6 +1279,7 @@ svg.chart text{font:12px var(--sans)} svg.chart text.v{font:700 11.5px var(--san
   window.addEventListener("hashchange",()=>{const h=location.hash.slice(1);if(VIEWS.some(v=>v.id===h))go(h)});
   $("view").addEventListener("click",async e=>{
     const st=e.target.closest("[data-star]"); if(st){e.stopPropagation(); toggleFav(st.dataset.star); return}
+    const dl=e.target.closest("[data-del]"); if(dl){e.stopPropagation(); removeStockDialog(dl.dataset.del,listContext()); return}
     const sb=e.target.closest("th button[data-col]"); if(sb){onSort(sb.dataset.col);return}
     const ch=e.target.closest("[data-chart]"); if(ch){ui.chart=ch.dataset.chart; save(); render(); animate(); document.querySelector(`[data-chart="${ui.chart}"]`)?.focus({preventScroll:true}); return}
     const pg=e.target.closest("[data-page]"); if(pg){const k=pg.dataset.key,a=pg.dataset.page; limits[k]=a==="all"?1e9:a==="less"?PAGE:(limits[k]||PAGE)+PAGE; render(); if(a==="less"){[...document.querySelectorAll("[data-key]")].find(b=>b.dataset.key===k)?.closest(".card")?.scrollIntoView({block:"start",behavior:"smooth"})} return}
