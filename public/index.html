@@ -550,6 +550,8 @@ table.heat th{text-align:center;background:none;border:0}
   const BL=(year)=>{const d=new Date(BENCH+"T12:00:00Z");return `${d.getUTCDate()} ${d.toLocaleDateString("en-US",{month:"short",timeZone:"UTC"})}${year?" "+d.getUTCFullYear():""}`};
   const svgI=(id,c="i")=>`<svg class="${c}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[id]||""}</svg>`;
   const canEdit=()=>!!(S.settings&&(S.settings.canEdit||S.settings.needsKey));
+  // Shown when editing is locked: on a hosted site that means ADMIN_KEY isn't set yet.
+  const lockedNote=what=>`<div class="banner">${svgI("key")}<span><b>View only.</b> ${what} are locked because this server has no <b>ADMIN_KEY</b>. Add ADMIN_KEY to the server's environment variables (Hostinger: your Node.js app → Environment variables) and redeploy; the page then asks for the key once and unlocks editing.</span></div>`;
 
   const stocks=()=>S.uni?.stocks||{};
   const cats=()=>S.uni?.categories||[];
@@ -993,7 +995,7 @@ table.heat th{text-align:center;background:none;border:0}
       <div class="card-b flush">${table(filt(list),["rank","stock","picked","lists","bench","cur","pct","trend"],null,"cons")}</div></section>`+foot();
   }
   function viewManage(){
-    if(!canEdit()) return `<div class="banner">${svgI("info")} Lists can only be edited on the computer running the server.</div>`+foot();
+    if(!canEdit()) return lockedNote("Lists")+foot();
     const fams=["Sectors","Claude picks","GPT picks","My Favorites"];
     const card=f=>{
       const cs=cats().filter(c=>c.family===f);
@@ -1014,7 +1016,7 @@ table.heat th{text-align:center;background:none;border:0}
     const ed=canEdit(), dis=ed?"":"disabled";
     const a=S.auto||{};
     const autoLine=!st.autoRefresh?"Off. Prices update only when you click Refresh or at the daily close.":a.marketOpen?`On. Market is open${a.nextAt?`, next update about ${timeLbl(a.nextAt)}`:""}.`:"On. Waiting for the US market to open (9:30 AM – 4:00 PM ET, weekdays).";
-    return `${ed?"":`<div class="banner">${svgI("info")} View only. Settings can be changed on the computer running the server${st.needsKey?" or with the admin key":""}.</div>`}
+    return `${ed?"":lockedNote("Settings")}
     <form id="setForm" class="form" autocomplete="off">
       <section class="card"><div class="card-h"><div><h3>${svgI("bell")}Alerts</h3><p>When a stock counts as a big drop or a big spike.</p></div></div><div class="card-b">
         <div class="field"><label for="sAlert">Alert line</label><div class="row"><span class="suffix"><input class="inp num" id="sAlert" name="alertPct" type="number" step="0.5" min="-50" max="-0.5" value="${st.alertPct}" ${dis}><span>%</span></span><span class="hint">A stock at or below this change vs the benchmark is flagged, listed under Alerts and leads the email.</span></div></div>
