@@ -6,20 +6,20 @@
 <title>Frontier Tech Watchlist</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800&display=swap">
 <script>try{const t=localStorage.getItem("ftw-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <style>
 /* Dashboard shell: sidebar + topbar + view. Every color is a token so light and dark stay in sync. */
 :root{
-  --bg:#f5f6f8; --panel:#ffffff; --panel-2:#f9fafb; --ink:#0f172a; --ink-2:#334155; --muted:#64748b;
-  --rule:#e5e7eb; --rule-soft:#eef0f3; --hover:#f3f4f6;
+  --bg:#f6f7f9; --panel:#ffffff; --panel-2:#f8f9fb; --ink:#111827; --ink-2:#374151; --muted:#6b7280;
+  --rule:#e8eaee; --rule-soft:#f1f2f5; --hover:#f4f5f7;
   --accent:#4f46e5; --accent-ink:#ffffff; --accent-soft:#eef2ff; --gpt:#9333ea; --gpt-soft:#f5ecff;
   --up:#059669; --up-soft:#e7f8f1; --down:#dc2626; --down-soft:#fdeeee; --warn:#b45309; --warn-soft:#fff6e5;
   --star:#f59e0b;
-  --shadow:0 1px 2px rgba(15,23,42,.04),0 1px 3px rgba(15,23,42,.06);
+  --shadow:0 1px 2px rgba(17,24,39,.03);
   --shadow-lg:0 20px 40px -12px rgba(15,23,42,.25);
-  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:"Mulish",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"Mulish",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
@@ -78,6 +78,22 @@ svg.i{width:16px;height:16px;flex:none}
 .search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--muted)}
 .search input{width:100%;background:var(--panel);border:1px solid var(--rule);border-radius:9px;padding:8px 10px 8px 32px;font-size:13.5px}
 .search input::placeholder{color:var(--muted)}
+/* live search results under the box */
+.search svg.i{position:static;transform:none;width:16px;height:16px;color:inherit}
+.qres{position:absolute;top:calc(100% + 6px);left:0;width:max(100%,380px);z-index:30;background:var(--panel);border:1px solid var(--rule);border-radius:14px;box-shadow:var(--shadow-lg);padding:6px;max-height:min(460px,70vh);overflow-y:auto}
+.qres .qh{display:flex;justify-content:space-between;padding:6px 10px 8px;font:700 11px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.qi{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border-radius:10px}
+.qi:hover,.qi[aria-selected="true"]{background:var(--hover)}
+.qi .qn{flex:1;min-width:0}
+.qi .qn b{font:800 13.5px var(--sans);display:flex;align-items:center;gap:6px}
+.qi .qn small{display:block;color:var(--muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qi mark{background:color-mix(in srgb,var(--accent) 18%,transparent);color:inherit;border-radius:3px;padding:0 1px}
+.qi .qp{text-align:right}
+.qi .qp small{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.qres .qall{all:unset;box-sizing:border-box;cursor:pointer;display:block;width:100%;text-align:center;padding:10px;margin-top:4px;border-top:1px solid var(--rule-soft);color:var(--accent);font-weight:700;font-size:13px;border-radius:0 0 10px 10px}
+.qres .qall:hover{background:var(--hover)}
+.qres .qempty{padding:18px 12px;text-align:center;color:var(--muted);font-size:13px}
+@media (max-width:760px){.qres{width:100%}}
 .switch{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2);cursor:pointer;user-select:none;white-space:nowrap}
 .switch input{appearance:none;width:32px;height:18px;border-radius:999px;background:var(--rule);position:relative;cursor:pointer;margin:0;transition:background .15s;flex:none}
 .switch input::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .15s;box-shadow:0 1px 2px rgba(0,0,0,.25)}
@@ -422,6 +438,58 @@ table.heat th{text-align:center;background:none;border:0}
   .bar{display:none}
   .toasts{left:16px;right:16px;align-items:stretch}
 }
+
+/* ---------- clean look: Mulish, quieter colors, more air ---------- */
+body{font-size:14.5px;letter-spacing:-.003em;font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.num,.kpi .v,.badge,.stk .t,td,svg.chart text{font-variant-numeric:tabular-nums}
+h1,h2,h3,.top h1{letter-spacing:-.015em}
+.top h1{font-size:22px;font-weight:800}
+.top .sub{font-size:13px}
+.view{gap:20px;padding-top:24px}
+.card{border-radius:14px;border-color:var(--rule)}
+.card-h{padding:18px 20px 8px}
+.card-h h2,.card-h h3{font-size:15px;font-weight:800}
+.card-h h3 svg{width:16px;height:16px;color:var(--muted)}
+.card-h p{font-size:13px;margin-top:4px}
+.card-b{padding:8px 20px 20px}
+th:first-child,td:first-child{padding-left:20px} th:last-child,td:last-child{padding-right:20px}
+/* summary cards: plain icon, big calm number */
+.kpi{padding:16px 18px;gap:6px}
+.kpi .l{font-size:12.5px;font-weight:600;color:var(--muted)}
+.kpi .l .ic,.kpi .l .ic.down,.kpi .l .ic.up{width:auto;height:auto;background:none;color:var(--muted)}
+.kpi .l .ic svg{width:15px;height:15px}
+.kpi .v{font:800 26px/1.15 var(--sans);letter-spacing:-.02em}
+.kpi .s{font-size:12.5px}
+.kpi .meter{height:5px;margin-top:6px}
+/* alerts: neutral box, red only where it means something */
+.alert{border-color:var(--rule);box-shadow:inset 3px 0 0 var(--down),var(--shadow)}
+.alert .card-h h2 svg{width:17px;height:17px}
+.chips{gap:6px}
+.chip{background:var(--panel);border:1px solid var(--rule);color:var(--down);font:700 12.5px/1 var(--sans);padding:7px 10px;border-radius:999px;gap:6px}
+.chip b{font-weight:800}
+.chip:hover{background:var(--hover);filter:none}
+.more-chip{color:var(--accent);border-style:dashed}
+.tag{font:800 9.5px/1 var(--sans);letter-spacing:.05em;padding:3px 5px;border-radius:999px}
+/* numbers, badges, tables */
+.badge{font:700 12px/1 var(--sans);padding:5px 8px;border-radius:999px}
+.stk .t{font:800 13.5px var(--sans);letter-spacing:.01em}
+.stk .c{font-size:12.5px}
+.av{border-radius:9px;font:800 9.5px var(--sans)}
+th{font:700 11.5px/1.2 var(--sans);text-transform:none;background:transparent;border-bottom-color:var(--rule)}
+td{border-bottom-color:var(--rule-soft);padding-top:9px;padding-bottom:9px}
+.mov h4{font-size:11.5px;letter-spacing:.07em}
+/* sidebar and status line */
+.nav a{font-size:14px;padding:9px 10px}
+.nav a .cnt{font:700 11px var(--sans);background:none;border:0;color:var(--muted)}
+.nav a .cnt.hot{background:var(--down-soft);color:var(--down);padding:1px 8px}
+.nav .lab{font-weight:800;letter-spacing:.1em}
+.status{font-size:12.5px}
+.status .auto{border:0;background:none;padding:0 0 0 6px;color:var(--muted)}
+.status .auto:hover{color:var(--accent)}
+.seg button{font-weight:700}
+.pill{font-weight:600}
+svg.chart text{font:12px var(--sans)} svg.chart text.v{font:700 11.5px var(--sans)} svg.chart text.ink{font-weight:600}
+.btn{font-weight:700}
 </style>
 </head>
 <body>
@@ -449,7 +517,8 @@ table.heat th{text-align:center;background:none;border:0}
       </div>
       <div class="grow"></div>
       <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input type="search" id="q" placeholder="Search ticker, company, sector" aria-label="Search ticker, company or sector"></label>
+        <input type="search" id="q" placeholder="Search ticker, company, sector" aria-label="Search ticker, company or sector" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="qres" autocomplete="off" spellcheck="false">
+        <div class="qres" id="qres" role="listbox" aria-label="Matching stocks" hidden></div></label>
       <label class="switch"><input type="checkbox" class="red" id="onlyAlerts"> <span id="onlyLbl">Below line only</span></label>
       <button type="button" class="btn ghost" id="addBtn" aria-label="Add stock" title="Add stock" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Add stock</span></button>
       <button type="button" class="btn" id="refreshBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 4v5h-5"/></svg><span>Refresh</span></button>
@@ -572,7 +641,7 @@ table.heat th{text-align:center;background:none;border:0}
   const favList=()=>cats().find(c=>c.family==="My Favorites");
   const isFav=k=>!!favList()?.items.includes(k);
   const hue=s=>{let h=0;for(const c of String(s))h=(h*31+c.charCodeAt(0))%360;return h};
-  const avatar=k=>{const t=sym(k).replace(/\s.*$/,"").slice(0,4),h=hue(t);
+  const avatar=k=>{const t=sym(k).replace(/\s.*$/,"").slice(0,3),h=hue(sym(k));
     return `<span class="av" style="background:hsl(${h} 70% 50% / .14);color:hsl(${h} 60% 45%)">${esc(t)}</span>`};
   const starBtn=k=>canEdit()?`<button type="button" class="star" data-star="${esc(k)}" aria-pressed="${isFav(k)}" aria-label="${isFav(k)?"Remove from":"Add to"} My Favorites" title="${isFav(k)?"Remove from":"Add to"} My Favorites">${svgI("star")}</button>`:"";
   const sinceOf=k=>{const b=S.alerts?.below; if(b&&!Array.isArray(b)&&b[k]) return b[k].since||null; return null;};
@@ -913,7 +982,7 @@ table.heat th{text-align:center;background:none;border:0}
       ${kpi("tdown","down","Worst",worst?`<span class="${cls(worst.p)}">${fmtPct(worst.p)}</span>`:"—",worst?`${worst.s.symbol} · ${worst.s.name||""}`:"")}
     </section>`;
     // Worst CHIPS alerts only; the full list lives on the Alerts page.
-    const CHIPS=16, chip=r=>`<button type="button" class="chip" data-k="${esc(r.k)}" data-tip="${esc(`<b>${esc(r.s.symbol)}</b> ${esc(r.s.name||"")}${tipRow(BL(),fmtP(benchP(r.k)))}${tipRow("Now",fmtP(curP(r.k)))}${sinceOf(r.k)?tipRow("Below since",dayLbl(sinceOf(r.k))):""}`)}"><b>${esc(r.s.symbol)}</b>${fmtPct(r.p)}${isNew(r.k)?'<span class="tag">new</span>':""}</button>`;
+    const CHIPS=12, chip=r=>`<button type="button" class="chip" data-k="${esc(r.k)}" data-tip="${esc(`<b>${esc(r.s.symbol)}</b> ${esc(r.s.name||"")}${tipRow(BL(),fmtP(benchP(r.k)))}${tipRow("Now",fmtP(curP(r.k)))}${sinceOf(r.k)?tipRow("Below since",dayLbl(sinceOf(r.k))):""}`)}"><b>${esc(r.s.symbol)}</b>${fmtPct(r.p)}${isNew(r.k)?'<span class="tag">new</span>':""}</button>`;
     h+=below.length?`<section class="card alert"><div class="card-h"><div><h2>${svgI("alerts")}${below.length} ${below.length===1?"stock is":"stocks are"} ${Math.abs(THR)}% or more below the ${BL()} close</h2><p>Worst first. Tagged <span class="tag">new</span> when it crossed on the latest close. Click a ticker for its chart.</p></div><a class="pill" href="#alerts">View all ${below.length} →</a></div>
       <div class="card-b"><div class="chips">${below.slice(0,CHIPS).map(chip).join("")}${below.length>CHIPS?`<a class="chip more-chip" href="#alerts">+${below.length-CHIPS} more</a>`:""}</div></div></section>`
       :`<section class="card"><div class="card-h"><div><h2>${svgI("ok")} Nothing below the ${TT()} line</h2><p>Every priced stock is within ${Math.abs(THR)}% of its ${BL()} close, or above it.</p></div></div></section>`;
@@ -1205,7 +1274,54 @@ table.heat th{text-align:center;background:none;border:0}
     try{ await api("PUT","api/settings",body); settingsDirty=false; await load(true); toast("Settings saved"+(benchChanged?". Fetching closes for the new benchmark…":"")); render(); }
     catch(e){ toast(esc(e.message),"err"); const m=$("saveMsg"); if(m){m.textContent=e.message; m.style.color="var(--down)"} }
   }
-  $("q").addEventListener("input",e=>{ui.q=e.target.value;render()});
+  // ---------- search: live results under the box, plus filtering of every table ----------
+  let qActive=0, qHits=[];
+  function searchHits(q){
+    const t=q.trim().toLowerCase(); if(!t) return [];
+    const out=[];
+    for(const [k,s] of Object.entries(stocks())){
+      const symL=String(s.symbol||k).toLowerCase(), nameL=String(s.name||"").toLowerCase(), secL=(secOf[k]||[]).join(" ").toLowerCase();
+      // Ticker matches rank first, then company name, then sector.
+      const score=symL===t?0:symL.startsWith(t)?1:symL.includes(t)||k.toLowerCase().includes(t)?2:nameL.startsWith(t)?3:nameL.includes(t)?4:secL.includes(t)?5:-1;
+      if(score>=0) out.push({k,s,score,p:pct(k)});
+    }
+    return out.sort((a,b)=>a.score-b.score||a.s.symbol.localeCompare(b.s.symbol));
+  }
+  const hl=(text,q)=>{const s=String(text||""),i=s.toLowerCase().indexOf(q.trim().toLowerCase()); return i<0?esc(s):esc(s.slice(0,i))+"<mark>"+esc(s.slice(i,i+q.trim().length))+"</mark>"+esc(s.slice(i+q.trim().length));};
+  function renderQres(){
+    const box=$("qres"), q=$("q").value;
+    if(!q.trim()||document.activeElement!==$("q")){box.hidden=true; $("q").setAttribute("aria-expanded","false"); return;}
+    qHits=searchHits(q); const top=qHits.slice(0,8); qActive=Math.min(qActive,Math.max(0,top.length-1));
+    box.innerHTML=top.length?`<div class="qh"><span>Stocks</span><span>${qHits.length} match${qHits.length===1?"":"es"}</span></div>`+
+      top.map((r,i)=>`<button type="button" class="qi" role="option" id="qo${i}" data-k="${esc(r.k)}" aria-selected="${i===qActive}">${avatar(r.k)}<span class="qn"><b>${hl(r.s.symbol,q)}${isBelow(r.p)?'<span class="tag">below</span>':""}</b><small>${hl(r.s.name,q)}${(secOf[r.k]||[]).length?" · "+esc(secOf[r.k].join(", ")):""}</small></span><span class="qp"><span class="badge ${cls(r.p)}">${fmtPct(r.p)}</span><small>${fmtP(curP(r.k))}</small></span></button>`).join("")+
+      `<button type="button" class="qall" data-qall>Show ${qHits.length>8?"all "+qHits.length:"them"} in the table ↓</button>`
+      :`<div class="qempty">No stock matches “${esc(q.trim())}”.${canEdit()?` <a href="#" data-qadd style="color:var(--accent);font-weight:700">Add ${esc(q.trim().toUpperCase())}</a>`:""}</div>`;
+    box.hidden=false; $("q").setAttribute("aria-expanded","true");
+    $("q").setAttribute("aria-activedescendant",top.length?"qo"+qActive:"");
+  }
+  // The results table for the current search: the Overview's "All stocks", or the view's first table.
+  function showInTable(){
+    $("qres").hidden=true;
+    const t=[...document.querySelectorAll("#view .card")].find(c=>c.querySelector("table tr[data-k]")&&(ui.view!=="overview"||c.querySelector('[data-key="all"]')||/All stocks/.test(c.textContent)));
+    t?.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  $("q").addEventListener("input",e=>{ui.q=e.target.value; qActive=0; render(); renderQres();});
+  $("q").addEventListener("focus",renderQres);
+  $("q").addEventListener("blur",()=>setTimeout(()=>{if(document.activeElement!==$("q")){$("qres").hidden=true;$("q").setAttribute("aria-expanded","false")}},180));
+  $("q").addEventListener("keydown",e=>{
+    const n=Math.min(8,qHits.length), open=!$("qres").hidden;
+    if(e.key==="ArrowDown"&&open&&n){e.preventDefault(); qActive=(qActive+1)%n; renderQres();}
+    else if(e.key==="ArrowUp"&&open&&n){e.preventDefault(); qActive=(qActive-1+n)%n; renderQres();}
+    else if(e.key==="Enter"){e.preventDefault(); if(open&&n){const k=qHits[qActive].k; $("qres").hidden=true; openDrawer(k);} else showInTable();}
+    else if(e.key==="Escape"){ if(open){$("qres").hidden=true;} else if($("q").value){$("q").value="";ui.q="";render();} }
+  });
+  // mousedown keeps focus in the box so the click lands before the results close.
+  $("qres").addEventListener("mousedown",e=>e.preventDefault());
+  $("qres").addEventListener("click",e=>{
+    const it=e.target.closest(".qi[data-k]"); if(it){$("qres").hidden=true; openDrawer(it.dataset.k); return}
+    if(e.target.closest("[data-qall]")){showInTable(); return}
+    if(e.target.closest("[data-qadd]")){e.preventDefault(); $("qres").hidden=true; addStockDialog($("q").value.trim());}
+  });
   $("onlyAlerts").checked=ui.only;
   $("onlyAlerts").addEventListener("change",e=>{ui.only=e.target.checked;save();render()});
   $("addBtn").addEventListener("click",()=>addStockDialog());
