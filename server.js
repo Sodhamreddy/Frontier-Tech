@@ -36,6 +36,8 @@ if (!store.read("config/universe")) {
 
 const app = express();
 app.disable("x-powered-by");
+// Private dashboard: keep it out of search engines.
+app.use((req, res, next) => { res.set("X-Robots-Tag", "noindex, nofollow, noarchive"); next(); });
 app.use(express.json({ limit: "2mb" }));
 
 // Who may edit: with ADMIN_KEY set, anyone sending it as x-admin-key; without one, only
@@ -148,6 +150,7 @@ app.post("/api/admin/watchlist", editor, express.text({ type: ["text/csv", "text
   return { stocks: Object.keys(uni.stocks).length, lists: uni.categories.length, benchmark: bench };
 }));
 
+app.get("/favicon.ico", (req, res) => res.type("image/png").sendFile(path.join(__dirname, "public", "favicon-32.png")));
 app.get("/healthz", (req, res) => res.json({ ok: true }));
 // HTML is revalidated on every load so a redesigned page shows up without a hard refresh.
 app.use(express.static(path.join(__dirname, "public"), {

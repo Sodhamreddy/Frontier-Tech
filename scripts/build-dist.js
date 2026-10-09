@@ -16,7 +16,7 @@ if (!data) { console.error("No watchlist data found (data/ or seed/data/)."); pr
 
 fs.rmSync(dist, { recursive: true, force: true });
 fs.mkdirSync(dist);
-for (const f of ["index.html", "classic.html"]) fs.copyFileSync(path.join(root, "public", f), path.join(dist, f));
+for (const f of ["index.html", "classic.html", "robots.txt", "favicon.svg", "favicon-32.png", "apple-touch-icon.png"]) fs.copyFileSync(path.join(root, "public", f), path.join(dist, f));
 fs.copyFileSync(path.join(src, ".htaccess"), path.join(dist, ".htaccess"));
 // config.php holds your secrets on the server; never ship one, only the sample.
 fs.cpSync(path.join(src, "api"), path.join(dist, "api"), { recursive: true, filter: (p) => path.basename(p) !== "config.php" });

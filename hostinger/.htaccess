@@ -2,11 +2,18 @@
 DirectoryIndex index.html
 Options -Indexes
 
+# Private dashboard: keep every URL out of search engines.
+<IfModule mod_headers.c>
+  Header always set X-Robots-Tag "noindex, nofollow, noarchive"
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   # Pass the admin key header through to PHP.
   RewriteCond %{HTTP:X-Admin-Key} .
   RewriteRule .* - [E=HTTP_X_ADMIN_KEY:%{HTTP:X-Admin-Key}]
+  # Browsers ask for /favicon.ico on their own; serve the PNG.
+  RewriteRule ^favicon\.ico$ favicon-32.png [L]
   # Every /api/... request goes to api/index.php (except the PHP files themselves).
   RewriteCond %{REQUEST_URI} !/api/(index|cron)\.php$
   RewriteRule ^api/(.*)$ api/index.php?route=$1 [QSA,L]

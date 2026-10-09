@@ -1,0 +1,3 @@
+# Private dashboard: ask crawlers not to index anything.
+User-agent: *
+Disallow: /
